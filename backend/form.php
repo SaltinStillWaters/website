@@ -36,7 +36,17 @@ class Form
                     <span style='color: red;'> {$_SESSION[self::$SESSION_NAME][$id]['error']} <br></span>
                 </div>";
     }
+    public static function inputPassword(string $id, string $placeholder='', string $icon='', bool $required = false)
+    {
+        self::addSession($id, Type::$Password, $required);
 
+        echo "  <div class='input-box'>
+                    <input type='password' id='$id' name='$id' placeholder='$placeholder' value='{$_SESSION[self::$SESSION_NAME][$id]['content']}'>
+                    $icon
+                    <span style='color: red;'> {$_SESSION[self::$SESSION_NAME][$id]['error']} <br></span>
+                    <input type='checkbox' onclick='myFunction(\"$id\")'>
+                </div>";
+    }
     private static function addSession(string $id, string $type, bool $required=false)
     {
         if (isset($_SESSION[self::$SESSION_NAME][$id]))

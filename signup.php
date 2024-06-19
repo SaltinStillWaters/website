@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <title>Felper</title>
     <link rel="stylesheet" href="stylesheet.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="backend/js/utils.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <?php
             Form::inputText('email', Type::$Email, 'Email', "<i class='bx bxs-envelope'></i>");
             Form::inputText('username', Type::$Text, 'Username', "<i class='bx bxs-user'></i>");
-            Form::inputText('password', Type::$Password, 'Password', "<i class='bx bxs-lock-alt'></i>");
+            Form::inputPassword('password', 'Password', "<i class='bx bxs-lock-alt'></i>");
             ?>
 
             <button type="submit" class="btn">Register</button>
