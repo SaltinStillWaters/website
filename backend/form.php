@@ -44,9 +44,12 @@ class Form
                     <input type='password' id='$id' name='$id' placeholder='$placeholder' value='{$_SESSION[self::$SESSION_NAME][$id]['content']}'>
                     $icon
                     <span style='color: red;'> {$_SESSION[self::$SESSION_NAME][$id]['error']} <br></span>
-                    <input type='checkbox' onclick='myFunction(\"$id\")'>
+                    <input type='checkbox' id='checkbox_$id' name='checkbox_$id' onclick='myFunction(\"$id\")'>
+                    <label for='checkbox_$id' class='custom-checkbox'></label>
                 </div>";
     }
+
+
     private static function addSession(string $id, string $type, bool $required=false)
     {
         if (isset($_SESSION[self::$SESSION_NAME][$id]))
