@@ -1,0 +1,5 @@
+$sql = "CREATE OR REPLACE TABLE USER(
+    user_name varchar(255) PRIMARY KEY,
+    user_email varchar(255) NOT NULL,
+    user_password varchar(255) NOT NULL
+)";

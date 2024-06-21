@@ -2,5 +2,6 @@
 session_start();
 $_SESSION = [];
 
-header('Location: signup.php');
+
+header('Location: frontend/signup.php');
 exit();

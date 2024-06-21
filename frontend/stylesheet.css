@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url(resources/valir.jpg) no-repeat;
+    background: url(../resources/valir.jpg) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -132,7 +132,7 @@ body {
     transform: translateY(-50%);
     width: 25px;
     height: 25px;
-    background: url('resources/hide.png') no-repeat center center;
+    background: url(../resources/hide.png) no-repeat center center;
     background-size: contain;
     cursor: pointer;
     color: #fff;
@@ -141,7 +141,7 @@ body {
 
 /* Change the background image when the checkbox is checked */
 .input-box input[type="checkbox"]:checked + .custom-checkbox {
-    background: url('resources/show.png') no-repeat center center;
+    background: url(../resources/show.png) no-repeat center center;
     background-size: contain;
     filter: invert(1);
 }

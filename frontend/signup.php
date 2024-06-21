@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once('backend/form.php');
+require_once('../backend/form.php');
+require_once('../backend/db/db.php');
 
 Form::init();
 
@@ -11,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     if ($_SESSION[Form::$SESSION_NAME]['password']['content'] === $_SESSION[Form::$SESSION_NAME]['password_confirm']['content'])
     {
+        DB::addNewUser($_POST, 'user');
         $passErrMsg = '';
     }
     else
@@ -36,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <h1>Sign up</h1>
             <?php
             Form::inputText('email', Type::$Email, 'Email', "<i class='bx bxs-envelope'></i>", true);
-            Form::inputText('username', Type::$Text, 'Username', "<i class='bx bxs-user'></i>", true);
+            Form::inputText('name', Type::$Text, 'Username', "<i class='bx bxs-user'></i>", true);
             Form::inputPassword('password', 'Password', "<i class='bx bxs-lock-alt'></i>", true);
             Form::inputPassword('password_confirm', 'Confrim Password', "<i class='bx bxs-lock-alt'></i>", true);
             //echo $passErrMsg;
