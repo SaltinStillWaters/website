@@ -1,5 +1,5 @@
 <?php
-require_once('backend/type.php');
+require_once('type.php');
 /**
  * Handles all form text input.
  * Works together with type.php to validate input.
@@ -33,7 +33,7 @@ class Form
         echo "  <div class='input-box'>
                     <input type='text' name='$id' placeholder='$placeholder' value='{$_SESSION[self::$SESSION_NAME][$id]['content']}'>
                     $icon
-                    <span style='color: red;'> {$_SESSION[self::$SESSION_NAME][$id]['error']} <br></span>
+                    <div class='err-msg'> <p>{$_SESSION[self::$SESSION_NAME][$id]['error']}</p> </div>
                 </div>";
     }
     public static function inputPassword(string $id, string $placeholder='', string $icon='', bool $required = false)
@@ -43,12 +43,11 @@ class Form
         echo "  <div class='input-box'>
                     <input type='password' id='$id' name='$id' placeholder='$placeholder' value='{$_SESSION[self::$SESSION_NAME][$id]['content']}'>
                     $icon
-                    <span style='color: red;'> {$_SESSION[self::$SESSION_NAME][$id]['error']} <br></span>
+                    <div class='err-msg'> <p>{$_SESSION[self::$SESSION_NAME][$id]['error']}</p> </div>
                     <input type='checkbox' id='checkbox_$id' name='checkbox_$id' onclick='myFunction(\"$id\")'>
                     <label for='checkbox_$id' class='custom-checkbox'></label>
                 </div>";
     }
-
 
     private static function addSession(string $id, string $type, bool $required=false)
     {
@@ -63,7 +62,7 @@ class Form
     {
         foreach ($_POST as $id => $content)
         {
-            if ($id === 'submit')
+            if ($id === 'submit' || $id == 'refresh')
             {
                 continue;
             }
@@ -78,48 +77,24 @@ class Form
     {
         foreach ($_SESSION[self::$SESSION_NAME] as $id => $key)
         {
-            
             if ($id == 'submit' || $id == 'refresh')
             {
                 continue;
             }
-            //check for invalid input
-            if (!Type::checkValid($key['content'], $key['type']))
-            {
-                if (!str_contains($key['error'], Type::errMsg($key['type']) . '<br>'))
-                {
-                    $key['error'] .= Type::errMsg($key['type']) . '<br>';
-                }
-            }
-            else
-            {
-                $key['error'] = str_replace(Type::errMsg($key['type']) . '<br>', '', $key['error']);
-            }
             
-            
+            $errMsg = '';
             //check for blank input
-            if (!$key['required'])
+            if ($key['required'] && $key['content'] === '')
             {
-                $_SESSION[self::$SESSION_NAME][$id]['error'] = $key['error'];
-                continue;
+                $errMsg = 'Required <br>';
             }
-            
-            if ($key['content'] === '')
+            elseif (!Type::checkValid($key['content'], $key['type']))
             {
-                if (!str_contains($key['error'], '*Required <br>'))
-                {
-                    $key['error'] .= '*Required <br>';
-                }
+                $errMsg = Type::errMsg($key['type']) . '<br>';
             }
-            else
-            {
-                $key['error'] = str_replace('*Required <br>', '', $key['error']);
-            }
-
             
             //update session error
-            $_SESSION[self::$SESSION_NAME][$id]['error'] = $key['error'];
-            
+            $_SESSION[self::$SESSION_NAME][$id]['error'] = $errMsg;
         }
     }
 }

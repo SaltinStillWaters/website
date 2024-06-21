@@ -18,13 +18,13 @@ class Type
         return match($type)
         {
             //error messages MUST be filled and unique, else there would be problems in error handling
-            self::$Email => '*Not a valid email',
-            self::$Name => '*Must only contain letters',
-            self::$PhoneNumber => '*Not a valid phone number',
-            self::$NumberStr => '*Must be a number',
-            self::$Password => '*Not a valid password',
-            self::$Date => '*Not a valid date',
-            self::$Text => '*Not a valid text',
+            self::$Email => 'Not a valid email',
+            self::$Name => 'Must only contain letters',
+            self::$PhoneNumber => 'Not a valid phone number',
+            self::$NumberStr => 'Must be a number',
+            self::$Password => 'Not a valid password',
+            self::$Date => 'Not a valid date',
+            self::$Text => 'Not a valid text',
         };
     }
     public static function checkValid($val, string $type)

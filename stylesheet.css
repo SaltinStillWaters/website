@@ -12,20 +12,20 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url(resources/login_bg.jpg) no-repeat;
+    background: url(resources/valir.jpg) no-repeat;
     background-size: cover;
     background-position: center;
 }
 
 .wrapper {
-    width: 420px;
+    width: 400px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     color: #fff;
     border-radius: 10px;
-    padding: 30px 40px;
+    padding: 18px 40px;
 }
 
 .wrapper .input-box {
@@ -101,6 +101,14 @@ body {
     margin: 20px 0 15px;
 }
 
+.wrapper .err-msg {
+    font-family: 'Arial', sans-serif; /* Change this to your preferred font */
+    color: rgb(202, 75, 75);
+    font-size: 14px; /* Adjust size as needed */
+    font-weight: bold; /* Optional: Makes the message stand out */
+    text-align:left;
+    padding-left: 22px;
+}
 .register-link p a {
     color: #fff;
     text-decoration: none;
@@ -124,7 +132,7 @@ body {
     transform: translateY(-50%);
     width: 25px;
     height: 25px;
-    background: url('resources/show.png') no-repeat center center;
+    background: url('resources/hide.png') no-repeat center center;
     background-size: contain;
     cursor: pointer;
     color: #fff;
@@ -133,7 +141,7 @@ body {
 
 /* Change the background image when the checkbox is checked */
 .input-box input[type="checkbox"]:checked + .custom-checkbox {
-    background: url('resources/hide.png') no-repeat center center;
+    background: url('resources/show.png') no-repeat center center;
     background-size: contain;
     filter: invert(1);
 }
