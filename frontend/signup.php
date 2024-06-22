@@ -36,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         <form method="post">
             <h1>Sign up</h1>
             <?php
-            Form::inputText('email', Type::$Email, 'Email', "<i class='bx bxs-envelope'></i>", true);
-            Form::inputText('name', Type::$Text, 'Username', "<i class='bx bxs-user'></i>", true);
+            Form::inputText('email', Type::$Email, 'Email', "<i class='bx bxs-envelope'></i>", true, true);
+            Form::inputText('name', Type::$Text, 'Username', "<i class='bx bxs-user'></i>", true, true);
             Form::inputPassword('password', 'Password', "<i class='bx bxs-lock-alt'></i>", true);
             Form::inputPassword('password_confirm', 'Confrim Password', "<i class='bx bxs-lock-alt'></i>", true);
             //echo $passErrMsg;

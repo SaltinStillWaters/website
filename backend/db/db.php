@@ -44,8 +44,10 @@ class DB
 
         return $column_names;
     }
-    private static function validateInfos($infos, $column_names, $tableName)
+    private static function validateInfos($infos, $tableName, $conn)
     {
+        $column_names = self::getColumnNames($conn, $tableName);
+
         $validated = [];
         foreach ($infos as $id => $content)
         {
@@ -57,19 +59,53 @@ class DB
 
         return $validated;
     }
+    private static function checkDuplicates($tableName, $conn)
+    {
+        $sql = "SELECT * FROM $tableName";
+
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result)
+        {
+            echo "ERROR IN SQL FROM checkDuplicates(): " . mysqli_error($conn);
+            exit();
+        }
+
+        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        
+        $uniqueIds = [];
+        
+        foreach ($_SESSION[Form::$SESSION_NAME] as $id => $key)
+        {
+            if ($key['unique'])
+            {
+                $uniqueIds[] = $id;
+            }
+        }
+        
+        $hasDuplicate = 0;
+        foreach ($rows as $row)
+        {
+            foreach ($uniqueIds as $id)
+            {
+                if ($_SESSION[Form::$SESSION_NAME][$id]['content'] === $row[$tableName . "_" . $id])
+                {
+                    $_SESSION[Form::$SESSION_NAME][$id]['error'] = "$id is already taken";
+                    $hasDuplicate = 1;
+                }
+            }    
+        }
+
+        return $hasDuplicate;
+    }
     public static function addNewUser(array $infos, string $tableName)
     {
         $conn = self::openConnection();
-        $column_names = self::getColumnNames($conn, $tableName);
-        
-        $infos = self::validateInfos($infos, $column_names, $tableName);
+        $infos = self::validateInfos($infos, $tableName, $conn);
 
-        $isDuplicate = self::exists('user_name', 'user', $infos["name"], $conn);
-
-        if ($isDuplicate)
+        if (self::checkDuplicates($tableName, $conn))
         {
-            mysqli_close($conn);
-            return "username is already taken";
+            return;
         }
 
         $sql = "INSERT INTO $tableName(";
