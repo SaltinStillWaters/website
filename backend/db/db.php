@@ -32,6 +32,7 @@ class DB
         if (!$result)
         {
             echo "ERROR IN getColumnNames() " . mysqli_error($conn);
+            mysqli_close($conn);
             exit();
         }
 
@@ -62,7 +63,15 @@ class DB
         $column_names = self::getColumnNames($conn, $tableName);
         
         $infos = self::validateInfos($infos, $column_names, $tableName);
-        
+
+        $isDuplicate = self::exists('user_name', 'user', $infos["name"], $conn);
+
+        if ($isDuplicate)
+        {
+            mysqli_close($conn);
+            return "username is already taken";
+        }
+
         $sql = "INSERT INTO $tableName(";
         foreach ($infos as $id => $content)
         {
@@ -80,9 +89,25 @@ class DB
         if (!mysqli_query($conn, $sql))
         {
             echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+            mysqli_close($conn);
             exit();
         }
 
         mysqli_close($conn);
+    }
+    private static function exists($columnName, $tableName, $needle, $conn)
+    {
+        $sql = "SELECT $columnName FROM $tableName
+                WHERE $columnName = '$needle'";
+
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result)
+        {
+            echo "ERROR IN SQL FROM exists(): " . mysqli_error($conn);
+            exit();
+        }
+
+        return mysqli_fetch_array($result) != [];
     }
 }
