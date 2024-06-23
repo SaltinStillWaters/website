@@ -5,8 +5,8 @@ require_once('../backend/db/db.php');
 require_once('../backend/auth.php');
 
 Form::init();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
+Form::$SESSION_NAME = 'login';
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     Form::updateContents();
     Form::updateErrors();
@@ -15,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         if (Auth::login())
         {
+            if (!isset($_POST['remember']))
+            {
+                $_SESSION[Form::$SESSION_NAME] = [];
+            }
             header('Location: welcome.php');
         }
         else
@@ -31,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Felper</title>
+    <title>Felper</title>   
     <link href="stylesheet.css" rel="stylesheet">
     <link href="boxicons-2.1.4/css/boxicons.min.css" rel='stylesheet'>
     <script src="../backend/js/utils.js"></script>
@@ -46,14 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             Form::inputPassword('password', 'Password', "<i class='bx bxs-lock-alt'></i>", true);
             ?>
 
-        <div class="remember-forgot">
-                <label><input type="checkbox"> Remember me</label>
+            <div class="remember-forgot">
+                <label><input type="checkbox" value="remember" id="remember" name="remember">Remember me</label>
                 <a href="#">Forgot password?</a>
             </div>
             <button type="submit" class="btn">Login</button>
 
             <div class="register-link">
-                <p>Don't have an account? <a href="#">Register</a></p>
+                <p>Don't have an account? <a href="signup.php">Register</a></p>
             </div>
         </form>
     </div>

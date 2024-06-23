@@ -1,0 +1,34 @@
+array(2) 
+{ 
+    ["user"]=> array(4) 
+    { 
+        ["name"]=> array(5) 
+        { 
+            ["content"]=> string(2) "bb" ["error"]=> string(0) "" ["type"]=> string(4) "Text" ["required"]=> bool(true) ["unique"]=> bool(false) 
+        } 
+        ["password"]=> array(5) 
+        { 
+            ["content"]=> string(1) "1" ["error"]=> string(0) "" ["type"]=> string(8) "Password" ["required"]=> bool(true) ["unique"]=> bool(false) 
+        } 
+        ["email"]=> array(5) 
+        {
+            ["content"]=> string(8) "a@ab.com" ["error"]=> string(0) "" ["type"]=> string(5) "Email" ["required"]=> bool(true) ["unique"]=> bool(true) 
+        } 
+        ["password_confirm"]=> array(5) 
+        {
+            ["content"]=> string(1) "1" ["error"]=> string(0) "" ["type"]=> string(8) "Password" ["required"]=> bool(true) ["unique"]=> bool(false) 
+        } 
+    } 
+    
+    ["login"]=> array(2) 
+    { 
+        ["name"]=> array(5) 
+        { 
+            ["content"]=> string(2) "aa" ["error"]=> string(0) "" ["type"]=> string(4) "Text" ["required"]=> bool(true) ["unique"]=> bool(false) 
+        } 
+        ["password"]=> array(5) 
+        { 
+            ["content"]=> string(1) "1" ["error"]=> string(0) "" ["type"]=> string(8) "Password" ["required"]=> bool(true) ["unique"]=> bool(false) 
+        } 
+    } 
+}

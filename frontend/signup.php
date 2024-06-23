@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         if (DB::addNewUser($_SESSION[Form::$SESSION_NAME], 'user'))
         {
+            $_SESSION[Form::$SESSION_NAME] = [];
             header('Location: welcome.php');
         }
     }
@@ -44,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <button type="submit" class="btn">Register</button>
 
             <div class="register-link">
-                <p>Already have an account? <a href="#">Login</a></p>
+                <p>Already have an account? <a href="login.php">Login</a></p>
             </div>
 
         </form>
