@@ -42,7 +42,9 @@ class DB
 
         $conn = self::openConnection();
         $infos = self::validateInfos($infos, $tableName, $conn);
-
+        
+        $infos['password'] = password_hash($infos['password'], PASSWORD_BCRYPT);
+        
         if (self::checkDuplicates($tableName, $conn))
         {
             return false;
@@ -175,20 +177,5 @@ class DB
         }
 
         return $matched;
-    }
-    private static function exists($columnName, $tableName, $needle, $conn)
-    {
-        $sql = "SELECT $columnName FROM $tableName
-                WHERE $columnName = '$needle'";
-
-        $result = mysqli_query($conn, $sql);
-
-        if (!$result)
-        {
-            echo "ERROR IN SQL FROM exists(): " . mysqli_error($conn);
-            exit();
-        }
-
-        return mysqli_fetch_array($result) != [];
     }
 }

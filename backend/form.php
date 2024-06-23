@@ -97,4 +97,21 @@ class Form
             $_SESSION[self::$SESSION_NAME][$id]['error'] = $errMsg;
         }
     }
+    public static function hasErrors()
+    {
+        foreach ($_SESSION[self::$SESSION_NAME] as $id => $key)
+        {
+            if ($id == 'submit' || $id == 'refresh')
+            {
+                continue;
+            }
+
+            if ($key['error'] !== '')
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

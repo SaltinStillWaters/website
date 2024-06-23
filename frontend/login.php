@@ -2,6 +2,7 @@
 session_start();
 require_once('../backend/form.php');
 require_once('../backend/db/db.php');
+require_once('../backend/auth.php');
 
 Form::init();
 
@@ -12,9 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     if (!Form::hasErrors())
     {
-        if (DB::addNewUser($_SESSION[Form::$SESSION_NAME], 'user'))
+        if (Auth::login())
         {
             header('Location: welcome.php');
+        }
+        else
+        {
+            $_SESSION[Form::$SESSION_NAME]['name']['error'] = 'Username and Password does not match';
+            $_SESSION[Form::$SESSION_NAME]['password']['error'] = 'Username and Password does not match';
         }
     }
 }
@@ -30,24 +36,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <link href="boxicons-2.1.4/css/boxicons.min.css" rel='stylesheet'>
     <script src="../backend/js/utils.js"></script>
 </head>
+
 <body>
     <div class="wrapper">
         <form method="post">
-            <h1>Sign up</h1>
+            <h1>Login</h1>
             <?php
-            Form::inputText('email', Type::$Email, 'Email', "<i class='bx bxs-envelope'></i>", true, true);
-            Form::inputText('name', Type::$Text, 'Username', "<i class='bx bxs-user'></i>", true, true);
+            Form::inputText('name', Type::$Text, 'Username', "<i class='bx bxs-user'></i>", true);
             Form::inputPassword('password', 'Password', "<i class='bx bxs-lock-alt'></i>", true);
-            Form::inputPassword('password_confirm', 'Confrim Password', "<i class='bx bxs-lock-alt'></i>", true);
             ?>
 
-            <button type="submit" class="btn">Register</button>
+        <div class="remember-forgot">
+                <label><input type="checkbox"> Remember me</label>
+                <a href="#">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn">Login</button>
 
             <div class="register-link">
-                <p>Already have an account? <a href="#">Login</a></p>
+                <p>Don't have an account? <a href="#">Register</a></p>
             </div>
-
         </form>
     </div>
 </body>
+
 </html>
