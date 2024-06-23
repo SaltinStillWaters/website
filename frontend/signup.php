@@ -4,19 +4,15 @@ require_once('../backend/form.php');
 require_once('../backend/db/db.php');
 
 Form::init();
-$err = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     Form::updateContents();
     Form::updateErrors();
 
-    if ($_SESSION[Form::$SESSION_NAME]['password']['content'] === $_SESSION[Form::$SESSION_NAME]['password_confirm']['content'])
+    if (DB::addNewUser($_SESSION[Form::$SESSION_NAME], 'user'))
     {
-        $err = DB::addNewUser($_POST, 'user');
-    }
-    else
-    {
-        $passErrMsg = 'Passwords does not match';
+        header('Location: welcome.php');
     }
 }
 ?>
@@ -40,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             Form::inputText('name', Type::$Text, 'Username', "<i class='bx bxs-user'></i>", true, true);
             Form::inputPassword('password', 'Password', "<i class='bx bxs-lock-alt'></i>", true);
             Form::inputPassword('password_confirm', 'Confrim Password', "<i class='bx bxs-lock-alt'></i>", true);
-            //echo $passErrMsg;
             ?>
 
             <button type="submit" class="btn">Register</button>
