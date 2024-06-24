@@ -4,9 +4,9 @@ class Auth
 {
     public static function login()
     {
-        $username = $_POST['name'];
+        $username = strtoupper($_POST['name']);
         $pass = $_POST['password'];
-
+        
         $sql = "SELECT user_password FROM USER
                 WHERE user_name = '$username'";
 

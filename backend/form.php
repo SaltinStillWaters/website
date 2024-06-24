@@ -26,9 +26,9 @@ class Form
             $_SESSION[self::$SESSION_NAME] = [];
         }
     }
-    public static function inputText(string $id, string $type, string $placeholder='', string $icon='', bool $required = false, bool $unique = false)
+    public static function inputText(string $id, string $type, string $placeholder='', string $icon='', bool $required = false, bool $unique = false, bool $caseSensitive = true)
     {
-        self::addSession($id, $type, $required, $unique);
+        self::addSession($id, $type, $required, $unique, $caseSensitive);
 
         echo "  <div class='input-box'>
                     <input type='text' name='$id' placeholder='$placeholder' value='{$_SESSION[self::$SESSION_NAME][$id]['content']}'>
@@ -38,7 +38,7 @@ class Form
     }
     public static function inputPassword(string $id, string $placeholder='', string $icon='', bool $required = false)
     {
-        self::addSession($id, Type::$Password, $required, false);
+        self::addSession($id, Type::$Password, $required, false, true);
 
         echo "  <div class='input-box'>
                     <input type='password' id='$id' name='$id' placeholder='$placeholder' value='{$_SESSION[self::$SESSION_NAME][$id]['content']}'>
@@ -49,14 +49,14 @@ class Form
                 </div>";
     }
 
-    private static function addSession(string $id, string $type, bool $required=false, bool $unique)
+    private static function addSession(string $id, string $type, bool $required=false, bool $unique, bool $caseSensitive)
     {
         if (isset($_SESSION[self::$SESSION_NAME][$id]))
         {
             return;
         }
         
-        $_SESSION[self::$SESSION_NAME][$id] = ['content' => '', 'error' => '', 'type' => $type, 'required' => $required, 'unique' => $unique];
+        $_SESSION[self::$SESSION_NAME][$id] = ['content' => '', 'error' => '', 'type' => $type, 'required' => $required, 'unique' => $unique, 'caseSensitive' => $caseSensitive];
     }
     public static function updateContents()
     {

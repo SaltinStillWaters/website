@@ -156,7 +156,7 @@ class DB
         {
             foreach ($uniqueIds as $id)
             {
-                if ($_SESSION[Form::$SESSION_NAME][$id]['content'] === $row[$tableName . "_" . $id])
+                if (strtoupper($_SESSION[Form::$SESSION_NAME][$id]['content']) === strtoupper($row[$tableName . "_" . $id]))
                 {
                     $id = str_replace('_', ' ', $id);
                     $_SESSION[Form::$SESSION_NAME][$id]['error'] = "$id is already taken";
