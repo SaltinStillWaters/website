@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.banner {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(../resources/roger.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.navbar {
+    width: 85%;
+    margin: auto;
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 120px;
+    cursor: pointer;
+}
+
+.navbar ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.navbar ul li::after {
+    content: '';
+    height: 3px;
+    width: 0%;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    transition: 0.5s;
+}
+
+.navbar ul li:hover::after {
+    width: 100%;
+}
+
+.slider-frame {
+    overflow: hidden;
+    height: 450px;
+    width: 800px;
+    margin: auto;
+    position: relative; /* Ensure the frame is relatively positioned */
+}
+
+.slide-images {
+    width: calc(800px * 4); /* 800px (width of one image) * 4 (number of images including one duplicate) */
+    height: 450px;
+    position: relative;
+    display: flex; /* Align images in a row */
+    animation-name: slide_animation;
+    animation-duration: 32s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.slide-images img {
+    width: 800px; /* Ensure each image takes up the width of the slider frame */
+    height: 450px;
+}
+
+@keyframes slide_animation {
+    0% {left: 0;}
+    12.5% {left: 0;} /* Pause at the first image */
+    25% {left: -800px;}
+    37.5% {left: -800px;} /* Pause at the second image */
+    50% {left: -1600px;}
+    62.5% {left: -1600px;} /* Pause at the third image */
+    75% {left: -2400px;}
+    87.5% {left: -2400px;} /* Pause at the fourth image (duplicate of the first) */
+    100% {left: 0;} /* Loop back to the first image */
+}
+
+@-webkit-keyframes slide_animation {
+    0% {left: 0;}
+    12.5% {left: 0;} /* Pause at the first image */
+    25% {left: -800px;}
+    37.5% {left: -800px;} /* Pause at the second image */
+    50% {left: -1600px;}
+    62.5% {left: -1600px;} /* Pause at the third image */
+    75% {left: -2400px;}
+    87.5% {left: -2400px;} /* Pause at the fourth image (duplicate of the first) */
+    100% {left: 0;} /* Loop back to the first image */
+}
