@@ -1,5 +1,5 @@
 :root {
-    --width: 700px;
+    --width: 900px;
     --height: calc(var(--width) * 9 / 16);
     --slides: 4;
 }
