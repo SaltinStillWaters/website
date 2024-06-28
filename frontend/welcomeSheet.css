@@ -55,17 +55,23 @@
     width: 100%;
 }
 
+
+:root {
+    --width: 700px;
+    --height: calc(var(--width) * 9 / 16);
+    --slides: 4;
+}
 .slider-frame {
     overflow: hidden;
-    height: 450px;
-    width: 800px;
+    width: var(--width);
+    height: var(--height);
     margin: auto;
     position: relative; /* Ensure the frame is relatively positioned */
 }
 
 .slide-images {
-    width: calc(800px * 4); /* 800px (width of one image) * 4 (number of images including one duplicate) */
-    height: 450px;
+    width: calc(var(--width) * var(--slides)); /* 800px (width of one image) * 4 (number of images including one duplicate) */
+    height: var(--height);
     position: relative;
     display: flex; /* Align images in a row */
     animation-name: slide_animation;
@@ -75,30 +81,30 @@
 }
 
 .slide-images img {
-    width: 800px; /* Ensure each image takes up the width of the slider frame */
-    height: 450px;
+    width: var(--width); /* Ensure each image takes up the width of the slider frame */
+    height: var(--height);
 }
 
 @keyframes slide_animation {
     0% {left: 0;}
-    12.5% {left: 0;} /* Pause at the first image */
-    25% {left: -800px;}
-    37.5% {left: -800px;} /* Pause at the second image */
-    50% {left: -1600px;}
-    62.5% {left: -1600px;} /* Pause at the third image */
-    75% {left: -2400px;}
-    87.5% {left: -2400px;} /* Pause at the fourth image (duplicate of the first) */
-    100% {left: -3200px;} /* Loop back to the first image */
+    12.5% {left: 0;}
+    25% {left: calc(var(--width) * -1);}
+    37.5% {left: calc(var(--width) * -1);}
+    50% {left: calc(var(--width) * -2);}
+    62.5% {left: calc(var(--width) * -2);}
+    75% {left: calc(var(--width) * -3);}
+    87.5% {left: calc(var(--width) * -3);}
+    100% {left: calc(var(--width) * -4);}
 }
 
-@-webkit-keyframes slide_animation {
+@keyframes slide_animation {
     0% {left: 0;}
-    12.5% {left: 0;} /* Pause at the first image */
-    25% {left: -800px;}
-    37.5% {left: -800px;} /* Pause at the second image */
-    50% {left: -1600px;}
-    62.5% {left: -1600px;} /* Pause at the third image */
-    75% {left: -2400px;}
-    87.5% {left: -2400px;} /* Pause at the fourth image (duplicate of the first) */
-    100% {left: -3200px;} /* Loop back to the first image */
+    12.5% {left: 0;}
+    25% {left: calc(var(--width) * -1);}
+    37.5% {left: calc(var(--width) * -1);}
+    50% {left: calc(var(--width) * -2);}
+    62.5% {left: calc(var(--width) * -2);}
+    75% {left: calc(var(--width) * -3);}
+    87.5% {left: calc(var(--width) * -3);}
+    100% {left: calc(var(--width) * -4);}
 }
