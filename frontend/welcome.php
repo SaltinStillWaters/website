@@ -50,7 +50,7 @@
     <p class="text-light lh-base text-center">
         Join forces with friends in thrilling 5v5 battles, strategize to outmaneuver your opponents, and experience the adrenaline rush of fast-paced combat.
     </p>
-    <h5 class="text-center text-light fw-bold fst-italic fs-1">Thrilling 5v5 Battles</h5><br>
+    <h5 class="text-center text-light fw-bold fst-italic fs-1">A Game for All Players</h5><br>
     <p class="text-light lh-base text-center">
         Whether you're a seasoned warrior or a newcomer to the battlefield, Mobile Legends promises an adventure that will ignite your passion for victory and camaraderie.
     </p>
