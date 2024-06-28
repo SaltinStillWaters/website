@@ -22,9 +22,8 @@
                 <img src="../resources/welcome/news/proQ.jpg" alt="Slide 1">
                 <img src="../resources/welcome/news/zhuxin.jpg" alt="Slide 2">
                 <img src="../resources/welcome/news/starlight.jpg" alt="Slide 3">
+                <img src="../resources/welcome/news/recharge.jpg" alt="Slide 4">
                 <img src="../resources/welcome/news/proQ.jpg" alt="Slide 1">
-                <img src="../resources/welcome/news/zhuxin.jpg" alt="Slide 2">
-                <img src="../resources/welcome/news/starlight.jpg" alt="Slide 3">
             </div>
         </div>
     </div>
