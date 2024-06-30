@@ -4,12 +4,11 @@ require_once(__DIR__ . '/../db/db.php');
 $conn = DB::openConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Debugging: Output post data
     error_log("POST data: " . print_r($_POST, true));
 
     $post_id = $_POST['post_id'];
     $content = $_POST['content'];
-    $user_name = $_SESSION['user_name']; // Assuming user_name is stored in session
+    $user_name = $_SESSION['user_name']; 
 
     // Debugging: Check session variable
     error_log("Session user_name: " . $user_name);
@@ -24,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../frontend/forums.php");
         exit();
     } else {
-        // Error handling
         echo "Error: " . $conn->error;
         error_log("Error in SQL execution: " . $conn->error);
     }
