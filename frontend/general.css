@@ -106,3 +106,18 @@ body {
     margin-bottom: 60px;
     backdrop-filter: blur(20px);
 }
+
+
+h1 {
+    margin-bottom: 30px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.comment {
+    padding: 10px;
+    border-left: 2px solid #007bff;
+   
+}
