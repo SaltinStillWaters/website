@@ -22,6 +22,8 @@
                 <li><a href="#">Strategy Guides</a></li>
                 <li><a href="#">Hero Rankings</a></li>
                 <li><a href="#">Counter Picking</a></li>
+                <li><a href="forums.php">Forums</a></li>
+
             </ul>
         </div>
         
