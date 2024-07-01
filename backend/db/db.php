@@ -7,6 +7,52 @@ class DB
     public static $PASSWORD = '';
     public static $NAME = 'website';
 
+    public static function createUserTable()
+    {
+        $sql = "CREATE OR REPLACE TABLE USER(
+            user_name varchar(255) PRIMARY KEY,
+            user_email varchar(255) NOT NULL,
+            user_password varchar(255) NOT NULL
+        )";
+
+        $conn = self::openConnection();
+
+        mysqli_query($conn, $sql);
+    }
+
+    public static function createForumsTables()
+    {
+        $sql =    "CREATE OR REPLACE TABLE posts (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_name VARCHAR(255) NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        content TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);";
+$conn = self::openConnection();
+
+mysqli_query($conn, $sql);
+
+        $sql = "CREATE OR REPLACE TABLE comments (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_name VARCHAR(255) NOT NULL,
+            post_id INT NOT NULL,
+            content TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (post_id) REFERENCES posts(id));";
+
+        mysqli_query($conn, $sql);
+        
+        $sql = "CREATE OR REPLACE TABLE upvotes (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_name VARCHAR(255) NOT NULL,
+                post_id INT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (post_id) REFERENCES posts(id)
+            );";
+
+        mysqli_query($conn, $sql);
+    }
     /**
      * Opens a mysqli connection and returns it
      * @param string $host The host of the database to connect to. Leave blank to use self::$HOST

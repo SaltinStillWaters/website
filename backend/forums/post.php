@@ -5,7 +5,7 @@ require_once(__DIR__ . '/../db/db.php');
 // Check if user is logged in
 if (!isset($_SESSION['user_name'])) {
     // Redirect to login or handle unauthorized access
-    header("Location: ../frontend/login.php");
+    header("Location: ../../frontend/login.php");
     exit();
 }
 
