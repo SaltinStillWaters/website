@@ -7,52 +7,7 @@ class DB
     public static $PASSWORD = '';
     public static $NAME = 'website';
 
-    public static function createUserTable()
-    {
-        $sql = "CREATE OR REPLACE TABLE USER(
-            user_name varchar(255) PRIMARY KEY,
-            user_email varchar(255) NOT NULL,
-            user_password varchar(255) NOT NULL
-        )";
 
-        $conn = self::openConnection();
-
-        mysqli_query($conn, $sql);
-    }
-
-    public static function createForumsTables()
-    {
-        $sql =    "CREATE OR REPLACE TABLE posts (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_name VARCHAR(255) NOT NULL,
-        title VARCHAR(255) NOT NULL,
-        content TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);";
-$conn = self::openConnection();
-
-mysqli_query($conn, $sql);
-
-        $sql = "CREATE OR REPLACE TABLE comments (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            user_name VARCHAR(255) NOT NULL,
-            post_id INT NOT NULL,
-            content TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (post_id) REFERENCES posts(id));";
-
-        mysqli_query($conn, $sql);
-        
-        $sql = "CREATE OR REPLACE TABLE upvotes (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                user_name VARCHAR(255) NOT NULL,
-                post_id INT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (post_id) REFERENCES posts(id)
-            );";
-
-        mysqli_query($conn, $sql);
-    }
     /**
      * Opens a mysqli connection and returns it
      * @param string $host The host of the database to connect to. Leave blank to use self::$HOST
@@ -119,6 +74,92 @@ mysqli_query($conn, $sql);
 
         mysqli_close($conn);
         return true;
+    }
+    public static function createDB()
+    {
+        $sql = "CREATE DATABASE IF NOT EXISTS " . self::$NAME;
+        $conn = mysqli_connect(self::$HOST, self::$USER, self::$PASSWORD);
+
+        if (mysqli_connect_errno()) 
+		{
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			exit();
+		}
+
+        if (!mysqli_query($conn, $sql))
+        {
+            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+            mysqli_close($conn);
+            exit();
+        }
+    }
+    public static function createUserTable()
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS USER(
+            user_name varchar(255) PRIMARY KEY,
+            user_email varchar(255) NOT NULL,
+            user_password varchar(255) NOT NULL
+        )";
+
+        $conn = self::openConnection();
+
+        if (!mysqli_query($conn, $sql))
+        {
+            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+            mysqli_close($conn);
+            exit();
+        }
+    }
+
+    public static function createForumsTables()
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS posts (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_name VARCHAR(255) NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        content TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
+
+        $conn = self::openConnection();
+
+        if (!mysqli_query($conn, $sql))
+        {
+            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+            mysqli_close($conn);
+            exit();
+        }
+
+        $sql = "CREATE TABLE IF NOT EXISTS comments (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_name VARCHAR(255) NOT NULL,
+            post_id INT NOT NULL,
+            content TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (post_id) REFERENCES posts(id));";
+
+        if (!mysqli_query($conn, $sql))
+        {
+            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+            mysqli_close($conn);
+            exit();
+        }
+        
+        $sql = "CREATE TABLE IF NOT EXISTS upvotes (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_name VARCHAR(255) NOT NULL,
+                post_id INT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (post_id) REFERENCES posts(id)
+            );";
+
+        if (!mysqli_query($conn, $sql))
+        {
+            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+            mysqli_close($conn);
+            exit();
+        }
+
+        mysqli_close($conn);
     }
     /**
      * Iterates through $infos and returns an associative array where $id matches the columns of the table

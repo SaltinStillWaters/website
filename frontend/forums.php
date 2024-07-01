@@ -8,6 +8,18 @@
     <link href="forumSheet.css" rel="stylesheet">
 </head>
 <body>
+        <div class="navbar">
+            <img src="../resources/ml_logo.png" class="logo">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Strategy Guides</a></li>
+                <li><a href="#">Hero Rankings</a></li>
+                <li><a href="#">Counter Picking</a></li>
+                <li><a href="forums.php">Forums</a></li>
+
+            </ul>
+        </div>
+
     <div class="container mt-5">
         <h1 class="text-center">Discussion Forum</h1>
         <div class="row">
