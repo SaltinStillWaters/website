@@ -7,7 +7,7 @@ header {
     justify-content: space-between;
     align-items: center;
     transition: 0.6s;
-    padding: 40px 100px;
+    padding: 30px 100px;
     z-index: 99999;
 }
 
@@ -57,10 +57,19 @@ header ul li::after {
     transition: width 0.5s;
 }
 
+header ul .logout li::after {
+    background: #960000;
+}
+
 header ul li:hover::after {
     width: 80%;
 }
 
+header ul .logout li a:hover {
+    color: #ff5a5a;
+    font-weight: 1000;
+    font-size: 1.5em;
+}
 header ul li a {
     position: relative;
     margin: 0 15px;
