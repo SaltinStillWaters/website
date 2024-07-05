@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION = [];
+//$_SESSION = [];
 
 header('Location: frontend/login.php');
 exit(); 

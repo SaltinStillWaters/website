@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             if (!isset($_POST['remember']))
             {
-                $_SESSION[Form::$SESSION_NAME] = [];
+                unset($_SESSION[Form::$SESSION_NAME]);
             }
             header('Location: welcome.php');
         }
