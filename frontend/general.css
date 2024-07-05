@@ -92,8 +92,8 @@ body {
     width: 0%;
     background: #009688;
     position: absolute;
-    left: 0;
-    right: 0;
+    left: 20%;
+    right: 20%;
     bottom: -5px;
     transition: 0.5s;
 }
