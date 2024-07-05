@@ -18,7 +18,7 @@ require_once('type.php');
  */
 class Form
 {
-    public static $SESSION_NAME = 'user';
+    public static $SESSION_NAME;
     public static function init()
     {
         if (!isset($_SESSION[self::$SESSION_NAME]))

@@ -4,8 +4,9 @@ require_once('../backend/form.php');
 require_once('../backend/db/db.php');
 require_once('../backend/auth.php');
 
-Form::init();
 Form::$SESSION_NAME = 'login';
+Form::init();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     Form::updateContents();
