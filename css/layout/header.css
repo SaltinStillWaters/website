@@ -12,7 +12,7 @@ header {
 }
 
 header.sticky {
-    padding: 5px 100px;
+    padding: 10px 100px;
     background-color: #fff;
     border-radius: 3px 3px 50px 50px;
 }
@@ -30,6 +30,7 @@ header .logo {
 
 header.sticky .logo {
     color: #000;
+    font-size: 1.5em;
 }
 
 header ul {

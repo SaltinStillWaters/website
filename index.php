@@ -1,6 +1,7 @@
 <head>
     <link rel="stylesheet" href="css/base/base.css">
     <link rel="stylesheet" href="css/layout/header.css">
+    <link rel="stylesheet" href="css/layout/footer.css">
     <link rel="stylesheet" href="css/features/slideshow.css">
     
 </head>
@@ -27,6 +28,12 @@
             <img src="resources/welcome/news/proQ.jpg" alt="Slide 1">
         </div>
     </div>
+
+    <footer>
+        <img src="resources/app_store.png" alt="">
+        <img src="resources/google_play.png" alt="">
+        <img src="resources/ml_logo.png" alt="" class="logo">
+    </footer>
 
     <script type="text/javascript">
         window.addEventListener("scroll", function() {
