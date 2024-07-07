@@ -67,9 +67,9 @@
     </div>
     
     <footer>
-        <img src="../resources/app_store.png" alt="">
-        <img src="../resources/google_play.png" alt="">
-        <img src="../resources/ml_logo.png" alt="" class="logo">
+        <img src="../resources/footer/app_store.png" alt="">
+        <img src="../resources/footer/google_play.png" alt="">
+        <img src="../resources/footer/ml_logo.png" alt="" class="logo">
     </footer>
 
     <script type="text/javascript">

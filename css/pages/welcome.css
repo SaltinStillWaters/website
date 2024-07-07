@@ -34,7 +34,7 @@
     background: 
         linear-gradient(to bottom, black 1%, transparent 50%),
         linear-gradient(to top, black .1%, transparent 50%),
-        url('../../resources/aulus.jpg');
+        url('../../resources/welcome/aulus.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -46,7 +46,7 @@
     background: 
         linear-gradient(to bottom, black 1%, transparent 50%),
         linear-gradient(to top, black .1%, transparent 50%),
-        url('../../resources/monster.jpg');
+        url('../../resources/welcome/monster.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -58,7 +58,7 @@
     background: 
         linear-gradient(to bottom, black 1%, transparent 50%),
         linear-gradient(to top, black .1%, transparent 50%),
-        url('../../resources/stun.jpg');
+        url('../../resources/welcome/stun.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -70,7 +70,7 @@
     background: 
         linear-gradient(to bottom, black 1%, transparent 50%),
         linear-gradient(to top, black .1%, transparent 50%),
-        url('../../resources/kadita.jpg');
+        url('../../resources/welcome/kadita.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
