@@ -64,7 +64,23 @@ function sortTable(column, sort_asc) {
         return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
     })
         .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+
+    const tableBody = document.querySelector('.table__body tbody');
+
+    // Get all rows within the table body
+    const rows = tableBody.querySelectorAll('tr');
+
+    // Iterate through each row
+    ctr = 1;
+    rows.forEach((row, index) => {
+        // Example: log the content of each cell in the row
+        const cells = row.querySelectorAll('td');
+        cells[0].textContent = ctr;
+        ++ctr;
+    });
 }
+
+
 
 // 3. Converting HTML table to PDF
 
