@@ -5,7 +5,7 @@ $conn = DB::openConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['post_id'])) {
     $post_id = $_GET['post_id'];
-    $user_name = $_SESSION['user_name']; // Assuming user_name is stored in session
+    $user_name = $_SESSION['user_name']; 
 
     // Check if the user has already upvoted this post
     $sql = "SELECT * FROM upvotes WHERE post_id = ? AND user_name = ?";
