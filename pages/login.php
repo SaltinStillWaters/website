@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Felper</title>   
     <link href="formSheet.css" rel="stylesheet">
-    <link href="boxicons-2.1.4/css/boxicons.min.css" rel='stylesheet'>
+    <link href="../css/dependencies/boxicons-2.1.4/css/boxicons.min.css" rel='stylesheet'>
     <script src="../backend/js/utils.js"></script>
 </head>
 

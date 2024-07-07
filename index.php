@@ -2,5 +2,5 @@
 session_start();
 //$_SESSION = [];
 
-header('Location: frontend/login.php');
+header('Location: pages/login.php');
 exit();
