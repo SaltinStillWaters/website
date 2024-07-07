@@ -1,17 +1,79 @@
+@font-face {
+    font-family: 'Martyric';
+    src: url('../../resources/fonts/Martyric_PersonalUse.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 .blk_bg {
     max-width: 100vw;
     height: 100vh;
-    background: linear-gradient(to bottom, black 70%, transparent 100%);
+    
+
+}
+.story_text {
+    font-family: 'Martyric', sans-serif;
+    font-size: 5em;
+    color: rgb(255, 215, 0); /* Base golden color */
+    height: 150px;
+    margin-inline: auto;
+    display: inline-block; /* Ensure the element is inline for background-clip to work */
+    text-shadow: 
+        0 0 5px rgba(255, 215, 0, 0.2), 
+        0 0 10px rgba(255, 215, 0, 0.2), 
+        0 0 15px rgba(255, 215, 0, 0.2), 
+        0 0 20px rgba(255, 215, 0, 0.2), 
+        0 0 25px rgba(255, 215, 0, 0.2),
+        0 0 30px rgba(255, 215, 0, 0.2); /* Glowing effect */
 }
 
-.img_bg {
+.aulus {
     max-width: 100vw;
     height: 100vh;
     background: 
         linear-gradient(to bottom, black 1%, transparent 50%),
-        linear-gradient(to top, black 1%, transparent 50%),
+        linear-gradient(to top, black .1%, transparent 50%),
         url('../../resources/aulus.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.monster {
+    max-width: 100vw;
+    height: 100vh;
+    background: 
+        linear-gradient(to bottom, black 1%, transparent 50%),
+        linear-gradient(to top, black .1%, transparent 50%),
+        url('../../resources/monster.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.stun {
+    max-width: 100vw;
+    height: 100vh;
+    background: 
+        linear-gradient(to bottom, black 1%, transparent 50%),
+        linear-gradient(to top, black .1%, transparent 50%),
+        url('../../resources/stun.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.kadita {
+    max-width: 100vw;
+    height: 100vh;
+    background: 
+        linear-gradient(to bottom, black 1%, transparent 50%),
+        linear-gradient(to top, black .1%, transparent 50%),
+        url('../../resources/kadita.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+

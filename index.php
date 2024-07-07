@@ -38,8 +38,32 @@
 
     </div>
 
-    <div class="img_bg">
-        Test
+    <div class="story_text">
+        Experience the Thrill of Battle
+    </div>
+    <div class="aulus">
+    </div>
+
+    <div class="story_text">
+        Protect your Allies
+    </div>
+    <div class="stun">
+    </div>
+
+    <div class="story_text">
+        Exterminate Demons
+    </div>
+    <div class="monster">
+    </div>
+
+    <div class="story_text">
+        Purify the World
+    </div>
+    <div class="kadita">
+    </div>
+
+    <div class="story_text">
+        Your Epic Journey Awaits...
     </div>
     
     <footer>
