@@ -7,7 +7,6 @@ class DB
     public static $PASSWORD = '';
     public static $NAME = 'website';
 
-
     /**
      * Opens a mysqli connection and returns it
      * @param string $host The host of the database to connect to. Leave blank to use self::$HOST
@@ -17,6 +16,7 @@ class DB
      * 
      * @return mysqli Returns an object that represents the connection
      */
+
     public static function openConnection(string $host='', string $user='', string $pass='', string $name='') : mysqli
     {
         $host = $host === '' ? self::$HOST : $host;
@@ -113,54 +113,40 @@ class DB
 
     public static function createForumsTables()
     {
-        $sql = "CREATE TABLE IF NOT EXISTS posts (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_name VARCHAR(255) NOT NULL,
-        title VARCHAR(255) NOT NULL,
-        content TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
+        $sqlPosts = "CREATE TABLE IF NOT EXISTS posts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_name VARCHAR(255) NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            content TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )";
 
-        $conn = self::openConnection();
-
-        if (!mysqli_query($conn, $sql))
-        {
-            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
-            mysqli_close($conn);
-            exit();
-        }
-
-        $sql = "CREATE TABLE IF NOT EXISTS comments (
+        $sqlComments = "CREATE TABLE IF NOT EXISTS comments (
             id INT AUTO_INCREMENT PRIMARY KEY,
             user_name VARCHAR(255) NOT NULL,
             post_id INT NOT NULL,
             content TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (post_id) REFERENCES posts(id));";
+            FOREIGN KEY (post_id) REFERENCES posts(id)
+        )";
 
-        if (!mysqli_query($conn, $sql))
-        {
-            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+        $conn = self::openConnection();
+
+        if (!mysqli_query($conn, $sqlPosts)) {
+            echo "ERROR IN SQL FOR posts TABLE: " . mysqli_error($conn);
             mysqli_close($conn);
             exit();
         }
-        
-        $sql = "CREATE TABLE IF NOT EXISTS upvotes (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                user_name VARCHAR(255) NOT NULL,
-                post_id INT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (post_id) REFERENCES posts(id)
-            );";
 
-        if (!mysqli_query($conn, $sql))
-        {
-            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+        if (!mysqli_query($conn, $sqlComments)) {
+            echo "ERROR IN SQL FOR comments TABLE: " . mysqli_error($conn);
             mysqli_close($conn);
             exit();
         }
 
         mysqli_close($conn);
     }
+
     /**
      * Iterates through $infos and returns an associative array where $id matches the columns of the table
      * 

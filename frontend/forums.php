@@ -1,132 +1,210 @@
+<?php
+session_start();
+require_once('../backend/db/db.php');
+
+// Function to retrieve posts
+function getPosts($conn) {
+    $sql = "SELECT posts.*, USER.user_name FROM posts 
+            INNER JOIN USER ON posts.user_name = USER.user_name 
+            ORDER BY posts.created_at DESC";
+    $result = mysqli_query($conn, $sql);
+    $posts = [];
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $posts[] = $row;
+        }
+    }
+    return $posts;
+}
+
+// Function to retrieve comments for a post
+function getComments($conn, $post_id) {
+    $sql = "SELECT * FROM comments WHERE post_id = ? ORDER BY created_at DESC";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $post_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $comments = [];
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $comments[] = $row;
+        }
+    }
+    return $comments;
+}
+
+function displayPosts($posts, $conn) {
+    if (count($posts) > 0) {
+        foreach ($posts as $post) {
+            $postDateTime = date('Y-m-d H:i', strtotime($post['created_at']));
+
+            echo '<div class="post card mb-3 mx-auto" style="max-width: 800px;">';
+            echo '<div class="card-body">';
+            echo '<div class="d-flex align-items-center">';
+            echo '<img src="../resources/avatar.jpg" class="avatar">';                    
+            echo '<div class="ml-3">';
+            echo '<h5 class="card-title">'.htmlspecialchars($post['title']).'</h5>';
+            echo '<h6 class="card-subtitle mb-2 text-muted">Posted on '.$postDateTime.'</h6>';
+            echo '</div></div>';
+            echo '<p class="card-text">'.htmlspecialchars($post['content']).'</p>';
+            echo '<button class="btn btn-success" data-toggle="collapse" data-target="#comments'.$post['id'].'">Comments</button>';
+            echo '</div>';
+
+            // Display comments
+            echo '<div id="comments'.$post['id'].'" class="collapse">';
+            $comments = getComments($conn, $post['id']);
+            if (count($comments) > 0) {
+                foreach ($comments as $comment) {
+                    $commentDateTime = date('Y-m-d H:i', strtotime($comment['created_at']));
+
+                    echo '<div class="comment card-body border-top">';
+                    echo '<div class="d-flex align-items-center">';
+                    echo '<img src="../resources/avatar.jpg" class="avatar">';                    
+                    echo '<div class="ml-3">';
+                    echo '<h6 class="card-subtitle mb-2 text-muted">Commented on '.$commentDateTime.'</h6>';
+                    echo '</div></div>';
+                    echo '<p class="card-text">'.htmlspecialchars($comment['content']).'</p>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<div class="card-body border-top">';
+                echo '<p class="card-text">No comments yet.</p>';
+                echo '</div>';
+            }
+
+            // Comment form
+            echo '<div class="card-body border-top">';
+            echo '<form method="POST" action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'">';
+            echo '<div class="form-group">';
+            echo '<input type="hidden" name="post_id" value="'.$post['id'].'">';
+            echo '<textarea class="form-control" name="comment_content" rows="2" placeholder="Add a comment" required></textarea>';
+            echo '</div>';
+            echo '<button type="submit" class="btn btn-primary">Comment</button>';
+            echo '</form>';
+            echo '</div>';
+            echo '</div></div>';
+        }
+    } else {
+        echo '<p class="text-center">No posts found.</p>';
+    }
+}
+
+// Handling post submission and comment submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $conn = DB::openConnection();
+
+    // Check if comment submission
+    if (isset($_POST['comment_content'])) {
+        $user_name = $_SESSION['user_name'];
+        $post_id = $_POST['post_id'];
+        $content = $_POST['comment_content'];
+
+        // Insert new comment into database
+        $sql = "INSERT INTO comments (user_name, post_id, content, created_at) VALUES (?, ?, ?, NOW())";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sis", $user_name, $post_id, $content);
+
+        if (mysqli_stmt_execute($stmt)) {
+            // Redirect to current page after successful comment
+            header("Location: forums.php");
+            exit();
+        } else {
+            echo "Error adding comment: " . mysqli_error($conn);
+        }
+
+        mysqli_stmt_close($stmt);
+    } elseif (isset($_POST['title']) && isset($_POST['content'])) { // Check if new post submission
+        $user_name = $_SESSION['user_name'];
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+
+        // Insert new post into database
+        $sql = "INSERT INTO posts (user_name, title, content, created_at) VALUES (?, ?, ?, NOW())";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sss", $user_name, $title, $content);
+
+        if (mysqli_stmt_execute($stmt)) {
+            // Redirect to forums page after successful post creation
+            header("Location: forums.php");
+            exit();
+        } else {
+            echo "Error creating new post: " . mysqli_error($conn);
+        }
+
+        mysqli_stmt_close($stmt);
+    }
+
+    mysqli_close($conn);
+}
+
+// Retrieve and display posts
+$conn = DB::openConnection();
+$posts = getPosts($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discussion Forum</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="forumSheet.css" rel="stylesheet">
+    <title>Forum</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="forumSheet.css">
 </head>
 <body>
-        <div class="navbar">
-            <img src="../resources/ml_logo.png" class="logo">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Strategy Guides</a></li>
-                <li><a href="#">Hero Rankings</a></li>
-                <li><a href="#">Counter Picking</a></li>
-                <li><a href="forums.php">Forums</a></li>
-
-            </ul>
-        </div>
-
+    <div class="navbar">
+        <img src="../resources/ml_logo.png" class="logo">
+        <ul>
+            <li><a href="welcome.php">Home</a></li>
+            <li><a href="#">Strategy Guides</a></li>
+            <li><a href="#">Hero Rankings</a></li>
+            <li><a href="#">Counter Picking</a></li>
+            <li><a href="forums.php">Forums</a></li>
+        </ul>
+    </div>
     <div class="container mt-5">
-        <h1 class="text-center">Discussion Forum</h1>
-        <div class="row">
-            <div class="col-md-8">
-                <h2>Posts</h2>
-                <div id="posts">
-                    <?php
-                    require_once(__DIR__ . '/../backend/db/db.php');
-                    $conn = DB::openConnection();
-
-                    // Function to load comments for a post
-                    function loadComments($postId, $conn) {
-                        $sql = "SELECT comments.content, comments.created_at, user.user_name 
-                                FROM comments 
-                                JOIN user ON comments.user_name = user.user_name 
-                                WHERE comments.post_id = $postId 
-                                ORDER BY comments.created_at ASC";
-                        $result = $conn->query($sql);
-                        $commentsHtml = '';
-
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                $commentsHtml .= "<div class='comments mb-2'>
-                                                    <p class='mb-1'><strong>{$row['user_name']}</strong> on {$row['created_at']}</p>
-                                                    <p>{$row['content']}</p>
-                                                  </div>";
-                            }
-                        } else {
-                            $commentsHtml = "<p>No comments yet.</p>";
-                        }
-
-                        return $commentsHtml;
-                    }
-
-                    // SQL query to fetch posts with their details
-                    $sql = "SELECT posts.id, posts.title, posts.content, posts.created_at, u.user_name AS user_name,
-                            (SELECT COUNT(*) FROM upvotes WHERE upvotes.post_id = posts.id) AS upvotes
-                            FROM posts 
-                            JOIN user u ON posts.user_name = u.user_name 
-                            ORDER BY posts.created_at DESC";
-                    $result = $conn->query($sql);
-
-                    // Display posts
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<div class='card mb-3'>
-                                    <div class='card-body'>
-                                        <h5 class='card-title'>{$row['title']}</h5>
-                                        <h6 class='card-subtitle mb-2 text-muted'>Posted by {$row['user_name']} on {$row['created_at']}</h6>
-                                        <p class='card-text'>{$row['content']}</p>
-                                        <button class='btn btn-success upvote' data-post-id='{$row['id']}'>Upvote ({$row['upvotes']})</button>
-                                        <h6 class='mt-4'>Comments</h6>
-                                        <div id='comments-{$row['id']}'>
-                                            <!-- Comments will be loaded here dynamically using PHP -->
-                                            ".loadComments($row['id'], $conn)."
-                                        </div>
-                                        <form action='../backend/forums/comments.php' method='post' class='mt-3'>
-                                            <input type='hidden' name='post_id' value='{$row['id']}'>
-                                            <div class='mb-3'>
-                                                <textarea class='form-control' name='content' rows='2' required></textarea>
-                                            </div>
-                                            <button type='submit' class='btn btn-primary'>Comment</button>
-                                        </form>
-                                    </div>
-                                  </div>";
-                        }
-                    } else {
-                        echo "<p>No posts available.</p>";
-                    }
-
-                    $conn->close();
-                    ?>
+        <h1 class="text-center">Forum</h1>
+        <hr>
+        <!-- Create New Post -->
+        <div class="text-right mb-4">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#createPostModal">
+                <i class="fas fa-pencil-alt"></i> Create New Post
+            </button>
+        </div>
+        <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createPostModalLabel">Create New Post</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                            <div class="form-group">
+                                <label for="title">Post Title</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="content">Post Content</label>
+                                <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Post</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <h2>Create a Post</h2>
-                <form action="../backend/forums/post.php" method="post">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Content</label>
-                        <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Post</button>
-                </form>
-            </div>
+        </div>
+        <div class="mx-auto" style="max-width: 800px;">
+            <?php displayPosts($posts, $conn); ?>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Upvote button functionality
-        document.querySelectorAll('.upvote').forEach(button => {
-            button.addEventListener('click', function() {
-                const postId = this.getAttribute('data-post-id');
-                fetch(`../backend/forums/upvotes.php?post_id=${postId}`)
-                    .then(response => response.text())
-                    .then(data => {
-                        if (data === 'success') {
-                            const count = this.innerText.match(/\d+/)[0];
-                            this.innerText = `Upvote (${parseInt(count) + 1})`;
-                        }
-                    });
-            });
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
 
