@@ -54,12 +54,18 @@ h1, h2, h6, p, .form-label, .btn {
     color: #ffffff;
 }
 
-.card-title, h5, .card-subtitle, .card-text, .form-control {
-    color: #000;
+.card-title, h5, .card-text, .form-control {
+    color: #000000;
+}
+
+.card-subtitle{
+    font-size: 20px;
+    color: #000000;
+
 }
 
 .card {
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.908); 
     transition: all 0.3s ease-in-out;
     overflow: hidden;
     margin-bottom: 20px;
