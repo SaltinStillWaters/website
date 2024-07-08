@@ -1,6 +1,7 @@
 <?php
 session_start();
-//$_SESSION = [];
+$_SESSION = [];
+
 $sql = "CREATE OR REPLACE TABLE HERO(
     hero_name varchar(255) PRIMARY KEY,
     hero_win_rate varchar(7) NOT NULL,
