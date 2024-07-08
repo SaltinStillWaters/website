@@ -57,7 +57,7 @@ function displayPosts($posts, $conn) {
             echo '<div id="comments'.$post['id'].'" class="collapse">';
             $comments = getComments($conn, $post['id']);
             if (count($comments) > 0) {
-                foreach ($comments as $comment) {
+                foreach (array_reverse($comments) as $comment) {
                     $commentDateTime = date('Y-m-d H:i', strtotime($comment['created_at']));
                     $commentUserName = strtolower(htmlspecialchars($comment['user_name'] ?? 'Unknown User'));
 
@@ -65,7 +65,7 @@ function displayPosts($posts, $conn) {
                     echo '<div class="d-flex align-items-center">';
                     echo '<img src="../resources/avatar.jpg" class="avatar">';
                     echo '<div class="ml-3">';
-                    echo '<h6 class="card-subtitle mb-2 text-muted username">'.$commentUserName.'</h6>';
+                    echo '<h6 class="card-subtitle mb-2 username">'.$commentUserName.'</h6>';
                     echo '<p class="text-muted" style="margin: 0;">Posted on '.$commentDateTime.'</p>';
                     echo '</div></div>';
                     echo '<p class="card-text mt-2">'.htmlspecialchars($comment['content']).'</p>';
