@@ -16,6 +16,7 @@ class DB
      * 
      * @return mysqli Returns an object that represents the connection
      */
+
     public static function openConnection(string $host='', string $user='', string $pass='', string $name='') : mysqli
     {
         $host = $host === '' ? self::$HOST : $host;
@@ -74,6 +75,78 @@ class DB
         mysqli_close($conn);
         return true;
     }
+    public static function createDB()
+    {
+        $sql = "CREATE DATABASE IF NOT EXISTS " . self::$NAME;
+        $conn = mysqli_connect(self::$HOST, self::$USER, self::$PASSWORD);
+
+        if (mysqli_connect_errno()) 
+		{
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			exit();
+		}
+
+        if (!mysqli_query($conn, $sql))
+        {
+            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+            mysqli_close($conn);
+            exit();
+        }
+    }
+    public static function createUserTable()
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS USER(
+            user_name varchar(255) PRIMARY KEY,
+            user_email varchar(255) NOT NULL,
+            user_password varchar(255) NOT NULL
+        )";
+
+        $conn = self::openConnection();
+
+        if (!mysqli_query($conn, $sql))
+        {
+            echo "ERROR IN SQL FROM addNewUser(): " . mysqli_error($conn);
+            mysqli_close($conn);
+            exit();
+        }
+    }
+
+    public static function createForumsTables()
+    {
+        $sqlPosts = "CREATE TABLE IF NOT EXISTS posts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_name VARCHAR(255) NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            content TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )";
+
+        $sqlComments = "CREATE TABLE IF NOT EXISTS comments (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_name VARCHAR(255) NOT NULL,
+            post_id INT NOT NULL,
+            content TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (post_id) REFERENCES posts(id)
+        )";
+
+        $conn = self::openConnection();
+
+        if (!mysqli_query($conn, $sqlPosts)) {
+            echo "ERROR IN SQL FOR posts TABLE: " . mysqli_error($conn);
+            mysqli_close($conn);
+            exit();
+        }
+
+        if (!mysqli_query($conn, $sqlComments)) {
+            echo "ERROR IN SQL FOR comments TABLE: " . mysqli_error($conn);
+            mysqli_close($conn);
+            exit();
+        }
+
+        mysqli_close($conn);
+    }
+
     /**
      * Iterates through $infos and returns an associative array where $id matches the columns of the table
      * 

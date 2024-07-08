@@ -30,6 +30,12 @@ class Auth
         
         mysqli_close($conn);
 
+        if ($match) {
+            // Store username in session
+            $_SESSION['user_name'] = $username;
+        }
+
+
         return $match;
     }
 }

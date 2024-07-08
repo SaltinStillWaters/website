@@ -1,0 +1,91 @@
+header {
+    background-color: #000 ;
+    position: fixed ;
+    top: 0 ;
+    left: 0 ;
+    width: 100% ;
+    display: flex ;
+    justify-content: space-between ;
+    align-items: center ;
+    transition: 0.6s ;
+    padding: 10px 100px ;
+    z-index: 99999 ;
+}
+
+header ul {
+    margin-bottom: 0;
+}
+
+header.sticky {
+    padding: 10px 100px ;
+    background-color: #fff;
+    border-radius: 3px 3px 50px 50px;
+}
+
+header .logo {
+    position: relative;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: 0.6s;
+}
+
+header.sticky .logo {
+    color: #000;
+    font-size: 1.5em;
+}
+
+header ul {
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+header ul li {
+    position: relative !important;
+    list-style: none;
+}
+
+header ul li::after {
+    content: '';
+    height: 3px;
+    width: 0%;
+    background: #009688;
+    position: absolute;
+    left: 50%;
+    right: 0;
+    transform: translateX(-50%);
+    bottom: -5px;
+    transition: width 0.5s;
+}
+
+header ul .logout li::after {
+    background: #960000 !important;
+}
+
+header ul li:hover::after {
+    width: 80%;
+}
+
+header ul .logout li a:hover {
+    color: #ff5a5a !important;
+    font-weight: 1000;
+    font-size: 1.5em;
+}
+header ul li a {
+    position: relative;
+    margin: 0 15px;
+    text-decoration: none !important;
+    color: #fff !important;
+    letter-spacing: 2px;
+    font-weight: 500px;
+    transition: 0.6s;
+}
+
+header.sticky ul li a {
+    color: #000 !important;
+}

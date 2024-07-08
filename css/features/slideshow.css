@@ -1,18 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton+SC&display=swap');
+
 :root {
-    --width: 900px;
+    --width: 55vw;
     --height: calc(var(--width) * 9 / 16);
     --slides: 4;
 }
 
-.slider-frame {
-    overflow: hidden;
-    width: var(--width);
-    height: var(--height);
-    margin: auto;
-    position: relative; /* Ensure the frame is relatively positioned */
+.slideshow {
+    position: relative;
+    margin-inline: auto;
+    margin-top: calc((100vh - var(--height))/2 - 50px);
+    max-height: calc(var(--height) + 50px);
+
 }
 
-.slide-images {
+.slideshow .title {
+    font-family: 'Anton SC', sans-serif;
+    text-shadow: 0 0 5px rgb(255, 255, 255); /* Adjust blur radius and color as needed */
+    letter-spacing: 3px;
+    position: relative;
+    text-align: center;
+    bottom: -70px;
+    font-weight: 500;
+    font-size: 2.5vw;
+    font-style: italic;
+    z-index: 9999;
+}
+
+.slideshow .slider-frame {
+    overflow: hidden;
+    width: var(--width);
+    height: max-content;
+    position: relative;
+    margin-inline: auto;
+    border: 10px solid transparent;
+    border-radius: 20px;
+}
+
+.slideshow .slide-images {
     width: calc(var(--width) * var(--slides)); /* 800px (width of one image) * 4 (number of images including one duplicate) */
     height: var(--height);
     position: relative;
@@ -23,8 +48,8 @@
     animation-iteration-count: infinite;
 }
 
-.slide-images img {
-    width: var(--width); /* Ensure each image takes up the width of the slider frame */
+.slideshow .slide-images img {
+    width: var(--width);
     height: var(--height);
 }
 
