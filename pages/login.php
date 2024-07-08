@@ -4,8 +4,9 @@ require_once('../backend/form.php');
 require_once('../backend/db/db.php');
 require_once('../backend/auth.php');
 
-Form::init();
 Form::$SESSION_NAME = 'login';
+Form::init();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     Form::updateContents();
@@ -17,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             if (!isset($_POST['remember']))
             {
-                $_SESSION[Form::$SESSION_NAME] = [];
+                unset($_SESSION[Form::$SESSION_NAME]);
             }
             header('Location: welcome.php');
         }
@@ -36,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Felper</title>   
-    <link href="formSheet.css" rel="stylesheet">
-    <link href="boxicons-2.1.4/css/boxicons.min.css" rel='stylesheet'>
+    <link href="../css/pages/login_signup.css" rel="stylesheet">
+    <link href="../css/dependencies/boxicons-2.1.4/css/boxicons.min.css" rel='stylesheet'>
     <script src="../backend/js/utils.js"></script>
 </head>
 

@@ -1,0 +1,18 @@
+footer {
+    padding: 20px 90px;
+    width: 100%;
+    display: flex;
+}
+
+footer img {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 150px;
+    height: 40px;
+}
+
+footer img.logo {
+    margin-left: auto;
+    width: 120px;
+    height: 60px;
+}

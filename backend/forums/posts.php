@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "sss", $user_name, $title, $content);
     if (mysqli_stmt_execute($stmt)) {
-        header("Location: ../frontend/forums.php");
+        header("Location: ../pages/forums.php");
         exit();
     } else {
         echo "Error creating new post: " . mysqli_error($conn);
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Post</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="frontend/forumSheet.css">
+    <link rel="stylesheet" href="../../css/pages/forum.css">
 </head>
 <body>
     <div class="container mt-5">
