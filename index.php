@@ -40,3 +40,9 @@ mysqli_query($conn, $sql);
 header('Location: pages/login.php');
 exit();
 
+DB::createDB();
+DB::createUserTable();
+DB::createForumsTables();
+
+header('Location: frontend/login.php');
+exit();
