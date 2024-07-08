@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (mysqli_stmt_execute($stmt)) {
             // Redirect to current page after successful comment
-            header("Location: forums.php");
+            header("Location: forum.php");
             exit();
         } else {
             echo "Error adding comment: " . mysqli_error($conn);
@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (mysqli_stmt_execute($stmt)) {
             // Redirect to forums page after successful post creation
-            header("Location: forums.php");
+            header("Location: forum.php");
             exit();
         } else {
             echo "Error creating new post: " . mysqli_error($conn);
