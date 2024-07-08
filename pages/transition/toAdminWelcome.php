@@ -1,3 +1,5 @@
 <?php
-
-var_dump(scandir('../../resources/welcome/news'));
+session_start();
+$_SESSION['admin'] = array_diff(scandir('../../resources/welcome/news'), array('..', '.'));
+header('Location: ../adminWelcome.php');
+exit();
