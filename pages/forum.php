@@ -54,6 +54,7 @@ function displayPosts($posts, $conn) {
             echo '</div>';
 
             // Display comments
+            
             echo '<div id="comments'.$post['id'].'" class="collapse">';
             $comments = getComments($conn, $post['id']);
             if (count($comments) > 0) {
@@ -162,7 +163,7 @@ $posts = getPosts($conn);
 </head>
 <body>
     <header>
-        <a href="#" class="logo">ml companion</a>
+        <a href="welcome.php" class="logo">ml companion</a>
         <ul>
                 <li><a href="#">Strategy Guides</a></li>
                 <li><a href="rankings.php">Hero Rankings</a></li>
