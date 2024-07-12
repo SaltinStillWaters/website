@@ -38,12 +38,10 @@ $sql = "INSERT INTO HERO (hero_name, hero_win_rate, hero_pick_rate, hero_ban_rat
 
 
 mysqli_query($conn, $sql);
-header('Location: pages/login.php');
-exit();
 
 DB::createDB();
 DB::createUserTable();
 DB::createForumsTables();
 
-header('Location: frontend/login.php');
+header('Location: pages/login.php');
 exit();
