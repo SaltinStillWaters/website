@@ -1,56 +1,49 @@
 <?php
-require_once('../../backend/db/db.php');
-session_start(); 
+require_once('../backend/db/db.php');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conn = DB::openConnection();
-
-    $user_name = $_SESSION['user_name']; 
-    $title = $_POST['title'];
-    $content = $_POST['content'];
-
-    // Insert new post into database
-    $sql = "INSERT INTO posts (user_name, title, content) VALUES (?, ?, ?)";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sss", $user_name, $title, $content);
-    if (mysqli_stmt_execute($stmt)) {
-        header("Location: ../pages/forum.php");
-        exit();
-    } else {
-        echo "Error creating new post: " . mysqli_error($conn);
+// Function to retrieve posts
+function getPosts($conn) {
+    $sql = "SELECT posts.*, USER.user_name FROM posts 
+            INNER JOIN USER ON posts.user_name = USER.user_name 
+            ORDER BY posts.created_at DESC";
+    $result = mysqli_query($conn, $sql);
+    $posts = [];
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $posts[] = $row;
+        }
     }
+    return $posts;
+}
 
-    mysqli_close($conn);
+// Function to display posts
+function displayPosts($posts, $conn) {
+    if (count($posts) > 0) {
+        foreach ($posts as $post) {
+            $postDateTime = date('Y-m-d H:i', strtotime($post['created_at']));
+            $postUserName = strtolower(htmlspecialchars($post['user_name'] ?? 'Unknown User'));
+
+            echo '<div class="post card mb-3 mx-auto" style="max-width: 800px;">';
+            echo '<div class="card-body">';
+            echo '<div class="d-flex align-items-center">';
+            echo '<img src="../resources/avatar.jpg" class="avatar">';
+            echo '<div class="ml-3">';
+            echo '<h6 class="card-subtitle mb-2 text-muted username">'.$postUserName.'</h6>';
+            echo '<p class="text-muted" style="margin: 0;">Posted on '.$postDateTime.'</p>';
+            echo '</div></div>';
+            echo '<h5 class="card-title mt-2">'.htmlspecialchars($post['title']).'</h5>';
+            echo '<p class="card-text">'.htmlspecialchars($post['content']).'</p>';
+            echo '<button class="btn btn-success" data-toggle="collapse" data-target="#comments'.$post['id'].'">Comments</button>';
+            echo '</div>';
+
+            // Display comments
+            require_once('comments.php');
+            echo '<div id="comments'.$post['id'].'" class="collapse">';
+            displayComments($conn, $post['id']);
+            echo '</div></div>';
+        }
+    } else {
+        echo '<p class="text-center">No posts found.</p>';
+    }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New Post</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/pages/forum.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Create New Post</h1>
-        <hr>
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <div class="form-group">
-                <label for="title">Post Title</label>
-                <input type="text" class="form-control" id="title" name="title" required>
-            </div>
-            <div class="form-group">
-                <label for="content">Post Content</label>
-                <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit Post</button>
-        </form>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
