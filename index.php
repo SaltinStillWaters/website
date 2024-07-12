@@ -43,5 +43,5 @@ DB::createDB();
 DB::createUserTable();
 DB::createForumsTables();
 
-header('Location: pages/login.php');
+header('Location: pages/transition/toAdminWelcome.php');
 exit();
