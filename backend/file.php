@@ -4,7 +4,7 @@ class File
 {
     public static function copyFolder($source, $destination)
     {
-        array_map('unlink', glob("$source/*.*"));
+        array_map('unlink', glob("$destination/*.*"));
 
         // Check if source is a directory
         if (!is_dir($source)) {

@@ -13,7 +13,8 @@ if (File::copyFolder($sourceFolder, $destinationFolder)) {
     echo 'Folder cloned successfully.';
 } else {
     echo 'Failed to clone folder.';
+    exit();
 }
 
-exit();
 header('Location: ../adminWelcome.php');
+exit();

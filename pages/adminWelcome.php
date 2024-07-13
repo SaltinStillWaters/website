@@ -1,10 +1,11 @@
 <?php
 session_start();
 require_once('../backend/admin.php');
+require_once('../backend/file.php');
 
 var_dump($_SESSION['admin']);
 echo '<br><br>';
-var_dump($_POST);
+// var_dump($_POST);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
@@ -15,13 +16,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     if (isset($_POST['fileUploaded']))
     {
+        $canUpload = 1;
+
+        if (count($_SESSION['admin']) == 4)
+        {
+            echo 'News must have exactly 4 images';
+            $canUpload = 0;
+        }
+
         $targetDir = "../resources/welcome/newsTemp/";
         $targetFile = $targetDir . basename($_FILES['upload']['name']);
         $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-        $canUpload = 1;
 
-        if (file_exists($targetFile)) 
+        if ($canUpload && file_exists($targetFile)) 
         {
+            if (!in_array(basename($_FILES['upload']['name']), $_SESSION['admin']))
+            {
+                $_SESSION['admin'][] = basename($_FILES['upload']['name']);
+            }
+
             $canUpload = 0;
         }
 
@@ -44,9 +57,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     if (isset($_POST['save']))
     {
+        $canSave = 1;
 
+        if (count($_SESSION['admin']) !== 4)
+        {
+            echo 'News must have exactly 4 images';
+            $canSave = 0;
+        }
+
+        if ($canSave)
+        {
+            $toRemove = array_diff(scandir('../resources/welcome/newsTemp'), $_SESSION['admin'], array('..', '.'));
+            var_dump(scandir('../resources/welcome/newsTemp'));
+            foreach ($toRemove as $file)
+            {
+                echo $file;
+                unlink('../resources/welcome/newsTemp/' . $file);
+            }
+    
+            File::copyFolder('../resources/welcome/newsTemp', '../resources/welcome/news');
+
+            echo 'changes have been saved';
+        }
     }
 
+    if (isset($_POST['discard']))
+    {
+        header('Location: transition/toAdminWelcome.php');
+        exit();
+    }
     unset($_POST);
 }
 
@@ -73,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     }
     echo "<input type='file' class='upload' name='upload' value='Upload' onchange=fileUploaded()>";
     echo "<input type='submit' class='save' name='save' value='Save'>";
+    echo "<input type='submit' class='discard' name='discard' value='Discard'>";
     ?>
     </form>
 

@@ -28,11 +28,22 @@
 
             <div class="slider-frame">
                 <div class="slide-images">
-                    <img src="../resources/welcome/news/proQ.jpg" alt="Slide 1">
-                    <img src="../resources/welcome/news/zhuxin.jpg" alt="Slide 2">
-                    <img src="../resources/welcome/news/starlight.jpg" alt="Slide 3">
-                    <img src="../resources/welcome/news/recharge.jpg" alt="Slide 4">
-                    <img src="../resources/welcome/news/proQ.jpg" alt="Slide 1">
+                <?php
+                    $source = "../resources/welcome/news/";
+                    $images = array_diff(scandir('../resources/welcome/news'), array('.', '..'));
+                    
+                    $firstImage = null;
+                    foreach($images as $image)
+                    {
+                        if ($firstImage === null)
+                        {
+                            $firstImage = $image;
+                        }
+                
+                        echo "<img src='$source$image'>";
+                    }
+                    echo "<img src='$source$firstImage'>"; 
+                ?>
                 </div>
             </div>
         </div>
