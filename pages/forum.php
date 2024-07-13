@@ -125,57 +125,11 @@ $posts = getPosts($conn);
         <img src="../resources/footer/google_play.png" alt="">
         <img src="../resources/footer/ml_logo.png" alt="" class="logo">
     </footer>
-
-    <script type="text/javascript">
-        window.addEventListener("scroll", function() {
-            var header = document.querySelector("header");
-            header.classList.toggle("sticky", window.scrollY > 0);
-        });
-    </script>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Toggle dropdown on ellipsis button click
-            $('.ellipsis-dropdown').on('click', function(e) {
-                e.stopPropagation();
-                $(this).find('.dropdown-menu').toggleClass('show');
-            });
-
-            // Close dropdown on click outside
-            $(document).click(function(e) {
-                if (!$(e.target).closest('.ellipsis-dropdown').length) {
-                    $('.dropdown-menu').removeClass('show');
-                }
-            });
-            $(document).ready(function() {
-            // Handle delete post click
-            $(document).on('click', '.delete-post', function(e) {
-                e.preventDefault();
-                if (confirm("Are you sure you want to delete this post?")) {
-                    var postId = $(this).data('postid');
-                    $.ajax({
-                        type: 'POST',
-                        url: '../backend/forums/delete_post.php', // Adjust the path based on your project structure
-                        data: { post_id: postId },
-                        success: function(response) {
-                            // Reload the page after successful deletion
-                            window.location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("Error deleting post:", error);
-                            alert("Error deleting post. Please try again later.");
-                        }
-                    });
-                }
-            });
-        });
-
-        });
-    </script>
+    <script src="../backend/js/forum.js"></script>
 
 </body>
 </html>
