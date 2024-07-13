@@ -17,7 +17,6 @@ function getComments($conn, $post_id) {
     return $comments;
 }
 
-// Function to display comments
 function displayComments($conn, $post_id) {
     $comments = getComments($conn, $post_id);
     if (count($comments) > 0) {
@@ -25,7 +24,7 @@ function displayComments($conn, $post_id) {
             $commentDateTime = date('Y-m-d H:i', strtotime($comment['created_at']));
             $commentUserName = strtolower(htmlspecialchars($comment['user_name'] ?? 'Unknown User'));
 
-            echo '<div class="comment card-body border-top">';
+            echo '<div class="comment card-body border-top position-relative">';
             echo '<div class="d-flex align-items-center">';
             echo '<img src="../resources/avatar.jpg" class="avatar">';
             echo '<div class="ml-3">';
@@ -33,20 +32,39 @@ function displayComments($conn, $post_id) {
             echo '<p class="text-muted" style="margin: 0;">Posted on '.$commentDateTime.'</p>';
             echo '</div></div>';
             echo '<p class="card-text mt-2">'.htmlspecialchars($comment['content']).'</p>';
+
+            // Determine if current user is the comment owner
+            $currentUser = strtolower(trim($_SESSION['user_name'] ?? ''));
+            $commentOwner = strtolower(trim($comment['user_name']));
+
+            echo '<div class="dropdown ellipsis-dropdown">';
+            echo '<button class="btn btn-link p-0 edit-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+            echo '<i class="fas fa-ellipsis-v"></i>';
+            echo '</button>';
+            echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">';
+            if ($currentUser === $commentOwner) {
+                echo '<a class="dropdown-item" href="#">Edit</a>';
+                echo '<a class="dropdown-item" href="#">Delete</a>';
+            } else {
+                echo '<a class="dropdown-item" href="#">Report</a>';
+                echo '<a class="dropdown-item" href="#">Hide</a>';
+            }
+            echo '</div></div>';
+
             echo '</div>';
         }
     } else {
-        echo '<div class="card-body border-top">';
-        echo '<p class="card-text">No comments yet.</p>';
+        echo '<div class="comment card-body border-top">';
+        echo '<p>No comments yet.</p>';
         echo '</div>';
     }
 
     // Comment form
-    echo '<div class="card-body border-top">';
-    echo '<form method="POST" action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'">';
+    echo '<div class="comment-form">';
+    echo '<form method="post" action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'">';
     echo '<div class="form-group">';
     echo '<input type="hidden" name="post_id" value="'.$post_id.'">';
-    echo '<textarea class="form-control" name="comment_content" rows="2" placeholder="Add a comment" required></textarea>';
+    echo '<textarea class="form-control" name="comment_content" rows="2" placeholder="Add a comment" required></textarea>';            
     echo '</div>';
     echo '<button type="submit" class="btn btn-primary">Reply</button>';
     echo '</form>';

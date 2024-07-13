@@ -1,5 +1,6 @@
 <?php
 require_once('../backend/db/db.php');
+require_once('comments.php');
 
 // Function to retrieve posts
 function getPosts($conn) {
@@ -15,8 +16,6 @@ function getPosts($conn) {
     }
     return $posts;
 }
-
-// Function to display posts
 function displayPosts($posts, $conn) {
     if (count($posts) > 0) {
         foreach ($posts as $post) {
@@ -33,7 +32,35 @@ function displayPosts($posts, $conn) {
             echo '</div></div>';
             echo '<h5 class="card-title mt-2">'.htmlspecialchars($post['title']).'</h5>';
             echo '<p class="card-text">'.htmlspecialchars($post['content']).'</p>';
-            echo '<button class="btn btn-success" data-toggle="collapse" data-target="#comments'.$post['id'].'">Comments</button>';
+
+            // Determine if current user is the post owner
+            $currentUser = strtolower(trim($_SESSION['user_name'])) ?? '';
+            $postOwner = strtolower(trim($post['user_name']));
+            if ($currentUser === $postOwner) {
+                // User is the owner of the post
+                echo '<div class="dropdown ellipsis-dropdown">';
+                echo '<button class="btn btn-link p-0 edit-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                echo '<i class="fas fa-ellipsis-v"></i>';
+                echo '</button>';
+                echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="options'.$post['id'].'">';
+                echo '<a class="dropdown-item edit-post" data-postid="'.$post['id'].'" href="#">Edit</a>';
+                echo '<a class="dropdown-item delete-post" data-postid="'.$post['id'].'" href="../backend/forums/delete_post.php">Delete</a>';
+                echo '</div>';
+                echo '</div>';
+            } else {
+                // User is not the owner of the post
+                echo '<div class="dropdown ellipsis-dropdown">';
+                echo '<button class="btn btn-link p-0 edit-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                echo '<i class="fas fa-ellipsis-v"></i>';
+                echo '</button>';
+                echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="options'.$post['id'].'">';
+                echo '<a class="dropdown-item" href="#">Report</a>';
+                echo '<a class="dropdown-item" href="#">Hide</a>';
+                echo '</div>';
+                echo '</div>';
+            }
+            
+            echo '<button class="btn btn-success mt-2" data-toggle="collapse" data-target="#comments'.$post['id'].'">Comments</button>';
             echo '</div>';
 
             // Display comments
@@ -43,7 +70,8 @@ function displayPosts($posts, $conn) {
             echo '</div></div>';
         }
     } else {
-        echo '<p class="text-center">No posts found.</p>';
+        echo '<p>No posts available.</p>';
     }
 }
-?>
+
+

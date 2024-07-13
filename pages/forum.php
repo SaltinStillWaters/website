@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('../backend/db/db.php');
 require_once('../backend/forums/posts.php');
 require_once('../backend/forums/comments.php');
 
@@ -51,15 +52,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($conn);
 }
 
-// Retrieve and display posts
+
 $conn = DB::openConnection();
 $posts = getPosts($conn);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -70,16 +70,14 @@ $posts = getPosts($conn);
     <link rel="stylesheet" href="../css/pages/forum.css">
 </head>
 <body>
-    <header>
+<header>
         <a href="welcome.php" class="logo">ml companion</a>
         <ul>
             <li><a href="#">Strategy Guides</a></li>
             <li><a href="rankings.php">Hero Rankings</a></li>
             <li><a href="#">Counter Picking</a></li>
             <li><a href="forum.php">Forums</a></li>
-            <div class="logout">
-                <li><a href="logout.php">Log out</a></li>
-            </div>
+            <li><a href="logout.php">Logout</a></li>
         </ul>
     </header>
 
@@ -89,11 +87,11 @@ $posts = getPosts($conn);
         <!-- Create New Post -->
         <div class="text-right mb-4">
             <button class="btn btn-primary" data-toggle="modal" data-target="#createPostModal">
-                <i class="fas fa-pencil-alt"></i> Create New Post
+                <i class="fas fa-pencil-alt"></i>  Create New Post
             </button>
         </div>
         <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createPostModalLabel">Create New Post</h5>
@@ -109,21 +107,75 @@ $posts = getPosts($conn);
                             </div>
                             <div class="form-group">
                                 <label for="content">Content</label>
-                                <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+                                <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Post</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Display Posts -->
-        <?php displayPosts($posts, $conn); ?>
+        <div class="mx-auto" style="max-width: 800px;">
+            <?php displayPosts($posts, $conn); ?>
+        </div>
     </div>
 
+    <footer>
+        <img src="../resources/footer/app_store.png" alt="">
+        <img src="../resources/footer/google_play.png" alt="">
+        <img src="../resources/footer/ml_logo.png" alt="" class="logo">
+    </footer>
+
+    <script type="text/javascript">
+        window.addEventListener("scroll", function() {
+            var header = document.querySelector("header");
+            header.classList.toggle("sticky", window.scrollY > 0);
+        });
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Toggle dropdown on ellipsis button click
+            $('.ellipsis-dropdown').on('click', function(e) {
+                e.stopPropagation();
+                $(this).find('.dropdown-menu').toggleClass('show');
+            });
+
+            // Close dropdown on click outside
+            $(document).click(function(e) {
+                if (!$(e.target).closest('.ellipsis-dropdown').length) {
+                    $('.dropdown-menu').removeClass('show');
+                }
+            });
+            $(document).ready(function() {
+            // Handle delete post click
+            $(document).on('click', '.delete-post', function(e) {
+                e.preventDefault();
+                if (confirm("Are you sure you want to delete this post?")) {
+                    var postId = $(this).data('postid');
+                    $.ajax({
+                        type: 'POST',
+                        url: '../backend/forums/delete_post.php', // Adjust the path based on your project structure
+                        data: { post_id: postId },
+                        success: function(response) {
+                            // Reload the page after successful deletion
+                            window.location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error deleting post:", error);
+                            alert("Error deleting post. Please try again later.");
+                        }
+                    });
+                }
+            });
+        });
+
+        });
+    </script>
+
 </body>
 </html>
