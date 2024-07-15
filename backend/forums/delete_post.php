@@ -1,59 +1,74 @@
 <?php
-session_start();
 require_once(__DIR__ . '/../db/db.php');
+session_start();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
-    // Open database connection
-    $conn = DB::openConnection();
-
-    // Sanitize input
-    $postId = mysqli_real_escape_string($conn, $_POST['post_id']);
-
-    // Begin a transaction for atomicity
-    mysqli_begin_transaction($conn);
-
-    try {
-        // Delete comments associated with the post
-        $deleteCommentsSql = "DELETE FROM comments WHERE post_id = ?";
-        $stmt = mysqli_prepare($conn, $deleteCommentsSql);
-        mysqli_stmt_bind_param($stmt, "i", $postId);
-        if (!mysqli_stmt_execute($stmt)) {
-            throw new Exception("Error deleting comments: " . mysqli_error($conn));
-        }
-        mysqli_stmt_close($stmt);
-
-        // Delete the post itself
-        $deletePostSql = "DELETE FROM posts WHERE id = ?";
-        $stmt = mysqli_prepare($conn, $deletePostSql);
-        mysqli_stmt_bind_param($stmt, "i", $postId);
-        if (!mysqli_stmt_execute($stmt)) {
-            throw new Exception("Error deleting post: " . mysqli_error($conn));
-        }
-        mysqli_stmt_close($stmt);
-
-        // Commit the transaction
-        mysqli_commit($conn);
-
-        // Close database connection
-        mysqli_close($conn);
-
-        echo "Post and comments deleted successfully";
-        exit();
-    } catch (Exception $e) {
-        // Rollback the transaction on failure
-        mysqli_rollback($conn);
-
-        // Close database connection
-        mysqli_close($conn);
-
-        http_response_code(500); // Internal Server Error
-        echo $e->getMessage();
-        exit();
-    }
-} else {
-    // Handle invalid requests
-    http_response_code(400); // Bad Request
-    echo "Invalid request";
+// Check if the user is logged in
+if (!isset($_SESSION['user_name'])) {
+    $_SESSION['error'] = "You must be logged in to perform this action.";
+    header("Location: ../../pages/forum.php");
     exit();
 }
+
+// Check if post_id is provided via GET
+if (!isset($_GET['post_id'])) {
+    $_SESSION['error'] = "Invalid request";
+    header("Location: ../../pages/forum.php");
+    exit();
+}
+
+// Get the post_id from GET parameter
+$postId = intval($_GET['post_id']);
+$userName = $_SESSION['user_name'];
+
+// Get the database connection
+$conn = DB::openConnection();
+
+// Check if the current user is the owner of the post
+$sql = "SELECT user_name FROM posts WHERE id = ?";
+$stmt = mysqli_prepare($conn, $sql);
+if ($stmt) {
+    mysqli_stmt_bind_param($stmt, "i", $postId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $postOwner);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    if ($userName === $postOwner) {
+        // User is the owner, delete the comments associated with the post first
+        $sql = "DELETE FROM comments WHERE post_id = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "i", $postId);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+
+            // Now delete the post
+            $sql = "DELETE FROM posts WHERE id = ?";
+            $stmt = mysqli_prepare($conn, $sql);
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "i", $postId);
+                if (mysqli_stmt_execute($stmt)) {
+                    mysqli_stmt_close($stmt);
+                    $_SESSION['message'] = "Post deleted successfully";
+                } else {
+                    mysqli_stmt_close($stmt);
+                    $_SESSION['error'] = "Failed to delete post";
+                }
+            } else {
+                $_SESSION['error'] = "Failed to prepare delete post statement";
+            }
+        } else {
+            $_SESSION['error'] = "Failed to prepare delete comments statement";
+        }
+    } else {
+        // User is not the owner
+        $_SESSION['error'] = "Unauthorized action";
+    }
+} else {
+    $_SESSION['error'] = "Failed to prepare select statement";
+}
+
+// Redirect back to the forum page
+header("Location: ../../pages/forum.php");
+exit();
 ?>

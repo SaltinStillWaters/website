@@ -70,6 +70,13 @@ h1, h2, h6, p, .form-label, .btn {
 
 }
 
+.btn-secondary{
+    background-color: #243b5adb;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 50px;
+}
+
 .btn-primary:hover {
     background-color: #9a0598d0; 
     border-color: #000000; 
@@ -83,3 +90,5 @@ h1, h2, h6, p, .form-label, .btn {
     margin: 8px!important; 
     color: #c6c6c6d1 !important ;
 }  
+
+

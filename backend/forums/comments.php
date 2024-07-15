@@ -43,9 +43,11 @@ function displayComments($conn, $post_id) {
             echo '</button>';
             echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">';
             if ($currentUser === $commentOwner) {
-                echo '<a class="dropdown-item" href="#">Edit</a>';
-                echo '<a class="dropdown-item" href="#">Delete</a>';
+                // User is the owner of the comment
+                echo '<a class="dropdown-item edit-comment" href="../backend/forums/edit_comment.php?comment_id" data-commentid="'.$comment['id'].'" data-content="'.htmlspecialchars($comment['content']).'">Edit</a>';
+                echo '<a class="dropdown-item delete-comment" href="../backend/forums/delete_comment.php?comment_id='.$comment['id'].'">Delete</a>';            
             } else {
+                // User is not the owner of the comment
                 echo '<a class="dropdown-item" href="#">Report</a>';
                 echo '<a class="dropdown-item" href="#">Hide</a>';
             }
@@ -69,5 +71,32 @@ function displayComments($conn, $post_id) {
     echo '<button type="submit" class="btn btn-primary">Reply</button>';
     echo '</form>';
     echo '</div>';
+    
 }
+    // modal for editting post
+    echo '<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">';
+    echo '<div class="modal-dialog modal-dialog-centered">';
+    echo '<div class="modal-content">';
+    echo '<div class="modal-header">';
+    echo '<h5 class="modal-title" id="editCommentModalLabel">Edit Comment</h5>';
+    echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+    echo '<span aria-hidden="true">&times;</span>';
+    echo '</button>';
+    echo '</div>';
+    echo '<form id="editCommentForm">';
+    echo '<div class="modal-body">';
+    echo '<div class="form-group">';
+    echo '<textarea class="form-control" id="editCommentContent" rows="3" placeholder="Edit your comment" required></textarea>';
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="modal-footer">';
+    echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+    echo '<button type="submit" class="btn btn-primary">Save changes</button>';
+    echo '</div>';
+    echo '</form>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+
+
 ?>

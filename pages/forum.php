@@ -53,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 
+
 $conn = DB::openConnection();
 $posts = getPosts($conn);
 ?>
@@ -68,6 +69,7 @@ $posts = getPosts($conn);
     <link rel="stylesheet" href="../css/layout/header.css">
     <link rel="stylesheet" href="../css/layout/footer.css">
     <link rel="stylesheet" href="../css/pages/forum.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <header>
@@ -84,6 +86,12 @@ $posts = getPosts($conn);
     <div class="container mt-5">
         <h1 class="text-center">Forum</h1>
         <hr>
+        <?php 
+        if (isset($_SESSION['message'])) {
+            echo '<div id="successMessage" class="alert alert-success">' . htmlspecialchars($_SESSION['message']) . '</div>';
+            unset($_SESSION['message']); // Clear the message after displaying
+        } 
+        ?>
         <!-- Create New Post -->
         <div class="text-right mb-4">
             <button class="btn btn-primary" data-toggle="modal" data-target="#createPostModal">
@@ -120,16 +128,159 @@ $posts = getPosts($conn);
         </div>
     </div>
 
-    <footer>
-        <img src="../resources/footer/app_store.png" alt="">
-        <img src="../resources/footer/google_play.png" alt="">
-        <img src="../resources/footer/ml_logo.png" alt="" class="logo">
-    </footer>
+  
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../backend/js/forum.js"></script>
+
+    <script>
+        //handles the edit post
+        document.addEventListener('DOMContentLoaded', function() {
+        const editButtons = document.querySelectorAll('.edit-post');
+        editButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const postId = this.dataset.postid;
+                const title = this.dataset.title;
+                const content = this.dataset.content;
+                
+                // Set modal title and content fields
+                document.getElementById('editPostModalLabel').textContent = 'Edit Post';
+                document.getElementById('editPostModal').dataset.postid = postId;
+                document.getElementById('editTitle').value = title;
+                document.getElementById('editContent').value = content;
+
+                // Show the modal
+                $('#editPostModal').modal('show');
+            });
+        });
+
+        // Handle form submission inside the modal
+        const editForm = document.getElementById('editForm');
+        editForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const postId = document.getElementById('editPostModal').dataset.postid;
+            const newTitle = document.getElementById('editTitle').value;
+            const newContent = document.getElementById('editContent').value;
+            
+            const formData = new FormData();
+            formData.append('post_id', postId);
+            formData.append('title', newTitle);
+            formData.append('content', newContent);
+
+            fetch('../backend/forums/edit_post.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    $('#editPostModal').modal('hide');
+                    location.reload(); // Refresh page on success
+                } else {
+                    alert(data.error); // Show error message
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to edit post. Please try again.');
+            });
+        });
+    });
+    </script>
+
+
+    <script> 
+        //del post
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-post');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const confirmation = confirm('Are you sure you want to delete this post?');
+                    if (confirmation) {
+                        window.location.href = this.href;
+                    }
+                });
+            });
+        });
+
+
+        //del comment
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-comment');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const confirmation = confirm('Are you sure you want to delete this comment?');
+                    if (confirmation) {
+                        window.location.href = this.href;
+                    }
+                });
+            });
+        });
+
+    </script>
+    
+    <script>
+        //edit comment
+        document.addEventListener('DOMContentLoaded', function() {
+            const editButtons = document.querySelectorAll('.edit-comment');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const commentId = this.dataset.commentid;
+                    const content = this.dataset.content;
+                    
+                    // Set modal title and content fields
+                    document.getElementById('editCommentModalLabel').textContent = 'Edit Comment';
+                    document.getElementById('editCommentModal').dataset.commentid = commentId;
+                    document.getElementById('editCommentContent').value = content;
+
+                    // Show the modal
+                    $('#editCommentModal').modal('show');
+                });
+            });
+
+            // Handle form submission inside the modal
+            const editCommentForm = document.getElementById('editCommentForm');
+            editCommentForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const commentId = document.getElementById('editCommentModal').dataset.commentid;
+                const newContent = document.getElementById('editCommentContent').value;
+                
+                const formData = new FormData();
+                formData.append('comment_id', commentId);
+                formData.append('content', newContent);
+
+                fetch('../backend/forums/edit_comment.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        $('#editCommentModal').modal('hide');
+                        location.reload(); // Refresh page on success (or update comments dynamically)
+                    } else {
+                        alert(data.error); // Show error message
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to edit comment. Please try again.');
+                });
+            });
+        });
+    </script>
+
+    <footer>
+        <img src="../resources/footer/app_store.png" alt="">
+        <img src="../resources/footer/google_play.png" alt="">
+        <img src="../resources/footer/ml_logo.png" alt="" class="logo">
+    </footer>
 
 </body>
 </html>

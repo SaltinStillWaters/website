@@ -16,6 +16,18 @@ function getPosts($conn) {
     }
     return $posts;
 }
+
+// Function to edit a post
+function editPost($conn, $postId, $newTitle, $newContent) {
+    $sql = "UPDATE posts SET title = ?, content = ? WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ssi", $newTitle, $newContent, $postId);
+    if (mysqli_stmt_execute($stmt)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 function displayPosts($posts, $conn) {
     if (count($posts) > 0) {
         foreach ($posts as $post) {
@@ -43,8 +55,8 @@ function displayPosts($posts, $conn) {
                 echo '<i class="fas fa-ellipsis-v"></i>';
                 echo '</button>';
                 echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="options'.$post['id'].'">';
-                echo '<a class="dropdown-item edit-post" data-postid="'.$post['id'].'" href="#">Edit</a>';
-                echo '<a class="dropdown-item delete-post" data-postid="'.$post['id'].'" href="../backend/forums/delete_post.php">Delete</a>';
+                echo '<a class="dropdown-item edit-post" data-postid="'.$post['id'].'" data-title="'.htmlspecialchars($post['title']).'" data-content="'.htmlspecialchars($post['content']).'" href="../backend/forums/edit_post.php?post_id='.$post['id'].'">Edit</a>';
+                echo '<a class="dropdown-item delete-post" href="../backend/forums/delete_post.php?post_id='.$post['id'].'">Delete</a>';
                 echo '</div>';
                 echo '</div>';
             } else {
@@ -73,5 +85,33 @@ function displayPosts($posts, $conn) {
         echo '<p>No posts available.</p>';
     }
 }
+    //modal for editting posts
+    echo '<div class="modal fade" id="editPostModal" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel" aria-hidden="true">';
+    echo '<div class="modal-dialog modal-dialog-centered" role="document">';
+    echo '<div class="modal-content">';
+    echo '<div class="modal-header">';
+    echo '<h5 class="modal-title" id="editPostModalLabel">Edit Post</h5>';
+    echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+    echo '<span aria-hidden="true">&times;</span>';
+    echo '</button>';
+    echo '</div>';
+    echo '<div class="modal-body">';
+    echo '<form id="editForm">';
+    echo '<div class="form-group">';
+    echo '<label for="editTitle">Title</label>';
+    echo '<input type="text" class="form-control" id="editTitle" name="title" required>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="editContent">Content</label>';
+    echo '<textarea class="form-control" id="editContent" name="content" rows="5" required></textarea>';
+    echo '</div>';
+    echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+    echo '<button type="submit" class="btn btn-primary">Save Changes</button>';
+    echo '</form>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
 
+?>
 
