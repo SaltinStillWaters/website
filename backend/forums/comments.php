@@ -73,7 +73,7 @@ function displayComments($conn, $post_id) {
     echo '</div>';
     
 }
-    // modal for editting post
+    // modal for editting comments
     echo '<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">';
     echo '<div class="modal-dialog modal-dialog-centered">';
     echo '<div class="modal-content">';

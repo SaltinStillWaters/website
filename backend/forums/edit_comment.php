@@ -54,7 +54,6 @@ if (isset($_SESSION['user_name']) && isset($_POST['comment_id']) && isset($_POST
     $error = "Invalid request";
 }
 
-// If reached here, there was an error
 $response = ['success' => false, 'error' => $error];
 echo json_encode($response);
 exit();
