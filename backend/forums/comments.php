@@ -86,17 +86,13 @@ function displayComments($conn, $post_id) {
     echo '<form id="editCommentForm">';
     echo '<div class="modal-body">';
     echo '<div class="form-group">';
-    echo '<textarea class="form-control" id="editCommentContent" rows="3" placeholder="Edit your comment" required></textarea>';
+    echo '<textarea class="form-control" id="editCommentContent" rows="4" placeholder="Edit your comment" required></textarea>';
     echo '</div>';
     echo '</div>';
-    echo '<div class="modal-footer">';
-    echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
     echo '<button type="submit" class="btn btn-primary">Save changes</button>';
-    echo '</div>';
     echo '</form>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
-
 
 ?>

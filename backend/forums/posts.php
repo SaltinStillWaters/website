@@ -17,17 +17,6 @@ function getPosts($conn) {
     return $posts;
 }
 
-// Function to edit a post
-function editPost($conn, $postId, $newTitle, $newContent) {
-    $sql = "UPDATE posts SET title = ?, content = ? WHERE id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ssi", $newTitle, $newContent, $postId);
-    if (mysqli_stmt_execute($stmt)) {
-        return true;
-    } else {
-        return false;
-    }
-}
 function displayPosts($posts, $conn) {
     if (count($posts) > 0) {
         foreach ($posts as $post) {
@@ -48,6 +37,7 @@ function displayPosts($posts, $conn) {
             // Determine if current user is the post owner
             $currentUser = strtolower(trim($_SESSION['user_name'])) ?? '';
             $postOwner = strtolower(trim($post['user_name']));
+            
             if ($currentUser === $postOwner) {
                 // User is the owner of the post
                 echo '<div class="dropdown ellipsis-dropdown">';
@@ -66,8 +56,8 @@ function displayPosts($posts, $conn) {
                 echo '<i class="fas fa-ellipsis-v"></i>';
                 echo '</button>';
                 echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="options'.$post['id'].'">';
-                echo '<a class="dropdown-item" href="#">Report</a>';
-                echo '<a class="dropdown-item" href="#">Hide</a>';
+                echo '<a class="dropdown-item report-post" data-postid="'.$post['id'].'" href="../backend/forums/report_post.php?post_id='.$post['id'].'">Report</a>';
+                echo '<a class="dropdown-item hide-post" data-postid="'.$post['id'].'" href="../backend/forums/hide_post.php?post_id='.$post['id'].'">Hide</a>';
                 echo '</div>';
                 echo '</div>';
             }
@@ -105,7 +95,6 @@ function displayPosts($posts, $conn) {
     echo '<label for="editContent">Content</label>';
     echo '<textarea class="form-control" id="editContent" name="content" rows="5" required></textarea>';
     echo '</div>';
-    echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
     echo '<button type="submit" class="btn btn-primary">Save Changes</button>';
     echo '</form>';
     echo '</div>';

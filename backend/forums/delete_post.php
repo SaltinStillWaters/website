@@ -2,13 +2,6 @@
 require_once(__DIR__ . '/../db/db.php');
 session_start();
 
-// Check if the user is logged in
-if (!isset($_SESSION['user_name'])) {
-    $_SESSION['error'] = "You must be logged in to perform this action.";
-    header("Location: ../../pages/forum.php");
-    exit();
-}
-
 // Check if post_id is provided via GET
 if (!isset($_GET['post_id'])) {
     $_SESSION['error'] = "Invalid request";

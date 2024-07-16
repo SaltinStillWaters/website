@@ -2,7 +2,6 @@
 require_once(__DIR__ . '/../db/db.php');
 session_start();
 
-// Get the database connection
 $conn = DB::openConnection();
 
 // Initialize message variable

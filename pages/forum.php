@@ -52,8 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($conn);
 }
 
-
-
 $conn = DB::openConnection();
 $posts = getPosts($conn);
 ?>
@@ -63,13 +61,12 @@ $posts = getPosts($conn);
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../css/base/base.css">
     <link rel="stylesheet" href="../css/layout/header.css">
     <link rel="stylesheet" href="../css/layout/footer.css">
     <link rel="stylesheet" href="../css/pages/forum.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <header>
@@ -128,13 +125,6 @@ $posts = getPosts($conn);
         </div>
     </div>
 
-  
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="../backend/js/forum.js"></script>
-
     <script>
         //handles the edit post
         document.addEventListener('DOMContentLoaded', function() {
@@ -189,6 +179,7 @@ $posts = getPosts($conn);
             });
         });
     });
+        
     </script>
 
 
@@ -275,6 +266,12 @@ $posts = getPosts($conn);
             });
         });
     </script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="../backend/js/forum.js"></script>
 
     <footer>
         <img src="../resources/footer/app_store.png" alt="">

@@ -1,3 +1,5 @@
+
+
 h1 {
     padding-top: 40px;
 }
@@ -82,13 +84,4 @@ h1, h2, h6, p, .form-label, .btn {
     border-color: #000000; 
 
 }
-
-.ellipsis-dropdown {
-    position: absolute !important;
-    top: 10px!important;
-    right: 10px!important;
-    margin: 8px!important; 
-    color: #c6c6c6d1 !important ;
-}  
-
 
