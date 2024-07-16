@@ -2,6 +2,9 @@
 session_start();
 require_once('../backend/admin.php');
 require_once('../backend/file.php');
+require_once('../backend/page_controller.php');
+
+PageController::init(false);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
@@ -70,8 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 echo $file;
                 unlink('../resources/welcome/newsTemp/' . $file);
             }
-    
-            File::copyFolder('../resources/welcome/newsTemp', '../resources/welcome/news');
+            Files::copyFolder('../resources/welcome/newsTemp', '../resources/welcome/news');
 
             echo 'changes have been saved';
         }
@@ -95,10 +97,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <!-- <link href="../css/base/base.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="../css/base/base.css">
+    <link rel="stylesheet" href="../css/layout/header.css">
+    <link rel="stylesheet" href="../css/pages/welcome.css">
     <link href="../css/pages/adminWelcome.css" rel="stylesheet">
 </head>
 <body>
+<header>
+            <a href="#" class="logo">ml companion</a>
+            <ul>
+                <li><a href="welcome.php">Strategy Guides</a></li>
+                <li><a href="rankings.php">Hero Rankings</a></li>
+                <li><a href="#">Counter Picking</a></li>
+                <li><a href='forum.php'>Forums</a></li>
+                <div class="logout">                
+                    <li><a href="logout.php">Log out</a></li>
+                </div>
+            </ul>
+        </header>
+
     <form id='form' method="post" enctype="multipart/form-data">
     <?php
     foreach($_SESSION['admin'] as $file)

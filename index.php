@@ -35,7 +35,15 @@ $sql = "INSERT INTO HERO (hero_name, hero_win_rate, hero_pick_rate, hero_ban_rat
 ('Ruby', '53.24%', '0.67%', '0.31%');
 ";
 
+mysqli_query($conn, $sql);
 
+$pass = password_hash('admin', PASSWORD_BCRYPT);
+$sql = "INSERT INTO user (user_name, user_email, user_password)
+            SELECT 'admin', 'admin@gmail.com', '". $pass . "'
+            WHERE NOT EXISTS (
+                SELECT 1 FROM user WHERE user_name = 'admin'
+            );
+";
 
 mysqli_query($conn, $sql);
 

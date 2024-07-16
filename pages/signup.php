@@ -2,6 +2,8 @@
 session_start();
 require_once('../backend/form.php');
 require_once('../backend/db/db.php');
+require_once('../backend/page_controller.php');
+PageController::init();
 
 Form::$SESSION_NAME = 'user';
 Form::init();
@@ -16,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         if (DB::addNewUser($_SESSION[Form::$SESSION_NAME], 'user'))
         {
             unset($_SESSION[Form::$SESSION_NAME]);
-            header('Location: welcome.php');
+            header('Location: login.php');
         }
     }
 }

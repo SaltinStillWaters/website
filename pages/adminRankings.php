@@ -1,6 +1,9 @@
 <?php
 require_once('../backend/db/DB_ranking.php');
 require_once('../backend/db/db.php');
+require_once('../backend/page_controller.php');
+
+PageController::init(false);
 function generateTable($table)
 {
     foreach ($table as $row)
@@ -112,8 +115,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/base/base.css">
+    <link rel="stylesheet" href="../css/layout/header.css">
+<link rel="stylesheet" href="../css/pages/welcome.css">
 </head>
 <body>
+<header>
+            <a href="#" class="logo">ml companion</a>
+            <ul>
+                <li><a href="welcome.php">Strategy Guides</a></li>
+                <li><a href="rankings.php">Hero Rankings</a></li>
+                <li><a href="#">Counter Picking</a></li>
+                <li><a href='forum.php'>Forums</a></li>
+                <div class="logout">                
+                    <li><a href="logout.php">Log out</a></li>
+                </div>
+            </ul>
+        </header>
 <form method="post">
 <table>
     <?php

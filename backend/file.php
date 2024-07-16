@@ -1,6 +1,6 @@
 <?php
 
-class File
+class Files
 {
     public static function copyFolder($source, $destination)
     {
