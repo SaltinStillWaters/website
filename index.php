@@ -43,5 +43,5 @@ DB::createDB();
 DB::createUserTable();
 DB::createForumsTables();
 
-header('Location: pages/transition/toAdminRankings.php');
+header('Location: pages/login.php');
 exit();
