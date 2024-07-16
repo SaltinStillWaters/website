@@ -3,10 +3,6 @@ session_start();
 require_once('../backend/admin.php');
 require_once('../backend/file.php');
 
-var_dump($_SESSION['admin']);
-echo '<br><br>';
-// var_dump($_POST);
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     if (isset($_POST['remove']))
