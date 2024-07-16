@@ -19,4 +19,3 @@ CREATE TABLE comments (
 );
 
 
-ALTER TABLE posts ADD COLUMN upvotes INT DEFAULT 0;
