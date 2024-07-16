@@ -1,0 +1,10 @@
+:root {
+    --width: 25vw;
+    --height: calc(var(--width) * 9 / 16);
+    --slides: 4;
+}
+
+img {
+    width: var(--width);
+    height: var(--height);
+}
