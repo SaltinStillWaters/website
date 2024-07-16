@@ -5,11 +5,16 @@ class DB_ranking
 {
     public static $tableName = 'hero';
 
-    public static function getTable()
+    public static function getTable($table = '')
     {
+        if ($table === '')
+        {
+            $table = self::$tableName;
+        }
+        
         $conn = DB::openConnection();
 
-        $sql = "SELECT * FROM " . self::$tableName;
+        $sql = "SELECT * FROM " . $table;
 
         $result = mysqli_query($conn, $sql);
 
