@@ -1,6 +1,5 @@
 <?php
 require_once('../backend/db/db.php');
-require_once('comments.php');
 
 // Function to retrieve posts
 function getPosts($conn) {
@@ -38,6 +37,7 @@ function displayPosts($posts, $conn) {
             $currentUser = strtolower(trim($_SESSION['user_name'])) ?? '';
             $postOwner = strtolower(trim($post['user_name']));
             
+                       
             if ($currentUser === $postOwner) {
                 // User is the owner of the post
                 echo '<div class="dropdown ellipsis-dropdown">';
@@ -62,7 +62,7 @@ function displayPosts($posts, $conn) {
                 echo '</div>';
             }
             
-            echo '<button class="btn btn-success mt-2" data-toggle="collapse" data-target="#comments'.$post['id'].'">Comments</button>';
+            echo '<button class="btn btn-secondary mt-2" data-toggle="collapse" data-target="#comments'.$post['id'].'">Comments</button>';
             echo '</div>';
 
             // Display comments
