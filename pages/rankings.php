@@ -96,12 +96,3 @@ function generateTable($table)
 </body>
 
 </html>
-
-<?php
-
-
-
-exit();
-require_once('../backend/db/DB_ranking.php');
-
-var_dump(DB_ranking::getTable());

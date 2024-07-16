@@ -101,6 +101,3 @@ function displayPosts($posts, $conn) {
     echo '</div>';
     echo '</div>';
     echo '</div>';
-
-?>
-

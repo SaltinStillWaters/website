@@ -64,4 +64,3 @@ if ($stmt) {
 // Redirect back to the forum page
 header("Location: ../../pages/forum.php");
 exit();
-?>

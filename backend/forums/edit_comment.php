@@ -56,4 +56,3 @@ if (isset($_SESSION['user_name']) && isset($_POST['comment_id']) && isset($_POST
 $response = ['success' => false, 'error' => $error];
 echo json_encode($response);
 exit();
-?>
