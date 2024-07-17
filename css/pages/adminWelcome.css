@@ -44,3 +44,28 @@ body {
     button.remove:hover {
     color: rgb(149, 149, 248);
     }
+
+    .message {
+        background-color: #dff0d8; /* Light green background */
+        color: #3c763d;           /* Dark green text */
+        border-radius: 5px;       /* Rounded corners */
+        padding: 10px 20px;       /* Some padding */
+        margin: 20px 0;           /* Some margin around */
+        border: 1px solid #d6e9c6; /* Slight border to define the edges */
+        font-family: Arial, sans-serif; /* Basic font family */
+        font-size: 16px; /* Font size */
+        text-align: center; /* Center the text */
+    }
+
+    .error {
+        background-color: #f2dede; /* Light red background */
+        color: #a94442;            /* Dark red text */
+        border-color: #ebccd1;     /* Border color */
+        border-radius: 5px;
+        padding: 10px 20px;       /* Some padding */
+        margin: 20px 0;           /* Some margin around */
+        border: 1px solid #d6e9c6; /* Slight border to define the edges */
+        font-family: Arial, sans-serif; /* Basic font family */
+        font-size: 16px; /* Font size */
+        text-align: center; /* Center the text */
+    }
