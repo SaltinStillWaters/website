@@ -37,7 +37,7 @@ class PageController
             $_SESSION[self::$SESSION_NAME]['PREV_PAGE'] = self::$FIRST_PAGE;
         }
         
-        self::addScript($isAccessible);
+        self::addScript(true);
         self::pageGuard();
         
         //must only be called after pageGuard()
