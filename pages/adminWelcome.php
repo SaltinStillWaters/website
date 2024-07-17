@@ -118,11 +118,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     <form id='form' method="post" enctype="multipart/form-data">
     <?php
+    
+    $ctr = 0;
     foreach($_SESSION['admin'] as $file)
     {
+        if ($ctr === 0 || $ctr === 2)
+        {
+            echo "<div class='img-container'>";
+        }
+
         echo "<img src='../resources/welcome/newsTemp/" . $file . "'>";
-        echo "<button type='submit' name='remove' value='$file'>X</button>";
+        echo "<button type='submit' class='remove' name='remove' value='$file'>x</button>";
+
+        if ($ctr === 1 || $ctr === 3)
+        {
+            echo "</div>";
+        }
+        $ctr++;
     }
+    echo "</div>";
+
     echo "<input type='file' class='upload' name='upload' value='Upload' onchange=fileUploaded()>";
     echo "<input type='submit' class='save' name='save' value='Save'>";
     echo "<input type='submit' class='discard' name='discard' value='Discard'>";
