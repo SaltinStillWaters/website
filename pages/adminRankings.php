@@ -116,7 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../css/base/base.css">
     <link rel="stylesheet" href="../css/layout/header.css">
     <link rel="stylesheet" href="../css/pages/adminRankings.css">
-
     <link rel="stylesheet" href="../css/pages/welcome.css">
 </head>
 
