@@ -70,17 +70,17 @@ $conn->close();
 </head>
 
 <body>
-    <header>
-        <a href="#" class="logo">ml companion</a>
-        <ul>
-            <li><a href="transition/toAdminWelcome">Strategy Guides</a></li>
-            <li><a href="transition/toAdminRankings.php">Hero Rankings</a></li>
-            <li><a href='transition/toAdminForum.php'>Forums</a></li>
-            <div class="logout">
-                <li><a href="logout.php">Log out</a></li>
-            </div>
-        </ul>
-    </header>
+<header>
+            <a href="#" class="logo">ml companion</a>
+            <ul>
+                <li><a href="transition/toAdminWelcome.php">Strategy Guides</a></li>
+                <li><a href="transition/toAdminRankings.php">Hero Rankings</a></li>
+                <li><a href='adminForum.php'>Forums</a></li>
+                <div class="logout">                
+                    <li><a href="logout.php">Log out</a></li>
+                </div>
+            </ul>
+        </header>
 
     <div class="container mt-5">
         <h1 class="container mt-5 text-center heading">Manage Forum</h1>
