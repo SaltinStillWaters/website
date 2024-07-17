@@ -37,10 +37,14 @@ function removeRow($name)
     mysqli_query($conn, $sql);
 }
 
-function addRow()
+function save()
 {
+    $conn = DB::openConnection();
 
+    $sql = 'CREATE OR REPLACE TABLE hero AS SELECT * FROM hero_temp';
+    mysqli_query($conn, $sql);
 }
+
 function updateDB()
 {
     $hero_names = $_POST['hero_name'];
@@ -109,6 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
         header('Location: transition/toAdminRankings.php');
     }
+    else if (isset($_POST['save']))
+    {
+        updateDB();
+        save();
+    }
 }
 ?>
 
@@ -128,10 +137,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 <header>
             <a href="#" class="logo">ml companion</a>
             <ul>
-                <li><a href="transition/toAdminWelcome.php">Edit News</a></li>
+                <li><a href="transition/toAdminWelcome">Strategy Guides</a></li>
                 <li><a href="transition/toAdminRankings.php">Hero Rankings</a></li>
-                <li><a href="#">Counter Picking</a></li>
-                <li><a href='forum.php'>Forums</a></li>
+                <li><a href='transition/toAdminForum.php'>Forums</a></li>
                 <div class="logout">                
                     <li><a href="logout.php">Log out</a></li>
                 </div>
@@ -175,6 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     ?>
                     <input type='submit' name='add' value='Add Row'>
                     <input type='submit' name='update' value='Update'>
+                    <input type='submit' name='save' value='Save'>
                     <input type='submit' name='discard' value='Discard'>
         </div>
     </main>

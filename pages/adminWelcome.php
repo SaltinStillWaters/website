@@ -67,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         if ($canSave)
         {
             $toRemove = array_diff(scandir('../resources/welcome/newsTemp'), $_SESSION['admin'], array('..', '.'));
-            var_dump(scandir('../resources/welcome/newsTemp'));
             foreach ($toRemove as $file)
             {
                 echo $file;
@@ -106,10 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 <header>
             <a href="#" class="logo">ml companion</a>
             <ul>
-                <li><a href="welcome.php">Strategy Guides</a></li>
-                <li><a href="rankings.php">Hero Rankings</a></li>
-                <li><a href="#">Counter Picking</a></li>
-                <li><a href='forum.php'>Forums</a></li>
+                <li><a href="transition/toAdminWelcome">Strategy Guides</a></li>
+                <li><a href="transition/toAdminRankings.php">Hero Rankings</a></li>
+                <li><a href='transition/toAdminForum.php'>Forums</a></li>
                 <div class="logout">                
                     <li><a href="logout.php">Log out</a></li>
                 </div>
