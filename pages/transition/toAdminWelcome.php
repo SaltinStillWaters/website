@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once('../../backend/file.php');
 require_once('../../backend/page_controller.php');
 
