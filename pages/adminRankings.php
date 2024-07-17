@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <header>
             <a href="#" class="logo">ml companion</a>
             <ul>
-                <li><a href="transition/toAdminWelcome.php">Strategy Guides</a></li>
+                <li><a href="transition/toAdminWelcome.php">News</a></li>
                 <li><a href="transition/toAdminRankings.php">Hero Rankings</a></li>
                 <li><a href='adminForum.php'>Forums</a></li>
                 <div class="logout">                

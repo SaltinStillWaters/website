@@ -72,13 +72,14 @@ $posts = getPosts($conn);
 </head>
 <body>
 <header>
-        <a href="welcome.php" class="logo">ml companion</a>
+        <a href="#" class="logo">ml companion</a>
         <ul>
-            <li><a href="#">Strategy Guides</a></li>
+            <li><a href="welcome.php">News</a></li>
             <li><a href="rankings.php">Hero Rankings</a></li>
-            <li><a href="#">Counter Picking</a></li>
-            <li><a href="forum.php">Forums</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><a href='forum.php'>Forums</a></li>
+            <div class="logout">
+                <li><a href="logout.php">Log out</a></li>
+            </div>
         </ul>
     </header>
 

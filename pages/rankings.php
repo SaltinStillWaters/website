@@ -39,7 +39,7 @@ function generateTable($table)
     <header>
         <a href="#" class="logo">ml companion</a>
         <ul>
-            <li><a href="welcome.php">Strategy Guides</a></li>
+            <li><a href="welcome.php">News</a></li>
             <li><a href="rankings.php">Hero Rankings</a></li>
             <li><a href='forum.php'>Forums</a></li>
             <div class="logout">
