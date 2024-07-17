@@ -3,7 +3,7 @@ require_once('../backend/db/DB_ranking.php');
 require_once('../backend/db/db.php');
 require_once('../backend/page_controller.php');
 
-PageController::init(true);
+PageController::init(false);
 function generateTable($table)
 {
     foreach ($table as $row)
