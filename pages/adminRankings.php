@@ -119,19 +119,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <header>
-        <a href="#" class="logo">ml companion</a>
-        <ul>
-            <li><a href="transition/toAdminWelcome.php">Strategy Guides</a></li>
-            <li><a href="transition/adminRankings.php">Hero Rankings</a></li>
-            <li><a href='adminForum.php'>Forums</a></li>
-            <div class="logout">
-                <li><a href="logout.php">Log out</a></li>
-            </div>
-        </ul>
-    </header>
-    <form method="post">
-        <main class="table" id="customers_table">
+<header>
+            <a href="#" class="logo">ml companion</a>
+            <ul>
+                <li><a href="transition/toAdminWelcome.php">Strategy Guides</a></li>
+                <li><a href="transition/adminRankings.php">Hero Rankings</a></li>
+                <li><a href='adminForum.php'>Forums</a></li>
+                <div class="logout">                
+                    <li><a href="logout.php">Log out</a></li>
+                </div>
+            </ul>
+        </header>
+<form method="post">
+<main class="table" id="customers_table">
 
             <section class="table__header">
                 <h1>Hero Ranking</h1>
