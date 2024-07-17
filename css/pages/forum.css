@@ -19,6 +19,7 @@ h1, h2, h6, p, .form-label, .btn {
 }
 
 .card {
+    position: relative;
     box-shadow: 0 4px 8px rgba(101, 100, 100, 0.681); 
     transition: all 0.3s ease-in-out;
     border-radius: 30px;
@@ -29,7 +30,7 @@ h1, h2, h6, p, .form-label, .btn {
 }
 
 .card:hover {
-    box-shadow: 0 8px 16px rgba(212, 210, 210, 0.536); 
+    box-shadow: 0 8px 16px rgba(170, 169, 169, 0.725); 
     transform: translateY(-5px);
 }
 
@@ -61,27 +62,73 @@ h1, h2, h6, p, .form-label, .btn {
 }
 
 .btn-primary {
-    background-color: #ec09f8db; /* Custom primary color */
-    border-color: #000000d2; /* Border color */
-    color: #fff; /* Text color */
-    padding: 5px 10px; /* Padding */
+    background-color: #ce11d8b5; 
+    border-color: #000000d2; 
+    color: #fff; 
+    padding: 5px 10px; 
     margin-left: 30px;
     margin-right: 30px;
     margin-bottom: 20px;
-
-
-}
-
-.btn-secondary{
-    background-color: #243b5adb;
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-bottom: 50px;
 }
 
 .btn-primary:hover {
     background-color: #9a0598d0; 
     border-color: #000000; 
 
+}
+
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus:active {
+    background-color: #9a0598d0;
+    border-color: #0000003f;    
+    color: #fff;             
+}
+
+.ellipsis-dropdown {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.btn-secondary {
+    background-color:#ce11d8b5;
+    border-color: #00000000;   
+    color: #fff;               
+}
+
+.btn-secondary:hover {
+    background-color: #9a0598d0;
+    border-color: #00000000;      
+}
+.btn-secondary:focus,
+.btn-secondary:active,
+.btn-secondary:focus:active {
+    background-color: #9a0598d0;
+    border-color: #000000;    
+    color: #fff;             
+}
+
+.ellipsis-dropdown {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+
+.ellipsis-dropdown .btn-link {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #161616d3;
+}
+
+.ellipsis-dropdown .btn-link:hover {
+    color: #ce11d8b5;
+}
+
+.ellipsis-dropdown .dropdown-menu {
+    right: 0;
+    left: auto;
 }
 
