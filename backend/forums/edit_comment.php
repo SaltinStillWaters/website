@@ -4,17 +4,17 @@ session_start();
 
 $conn = DB::openConnection();
 
-// Initialize message variable
+
 $message = '';
 $error = '';
 
-// Check if the user is logged in and has the necessary permission
+
 if (isset($_SESSION['user_name']) && isset($_POST['comment_id']) && isset($_POST['content'])) {
     $commentId = intval($_POST['comment_id']);
     $newContent = $_POST['content'];
     $userName = $_SESSION['user_name'];
 
-    // Check if the current user is the owner of the comment
+    
     $sql = "SELECT user_name FROM comments WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     if ($stmt) {
@@ -25,7 +25,7 @@ if (isset($_SESSION['user_name']) && isset($_POST['comment_id']) && isset($_POST
         mysqli_stmt_close($stmt);
 
         if ($userName === $commentOwner) {
-            // Update the comment
+            
             $sqlUpdate = "UPDATE comments SET content = ? WHERE id = ?";
             $stmtUpdate = mysqli_prepare($conn, $sqlUpdate);
             if ($stmtUpdate) {
@@ -43,7 +43,7 @@ if (isset($_SESSION['user_name']) && isset($_POST['comment_id']) && isset($_POST
                 $error = "Failed to prepare update statement";
             }
         } else {
-            // User is not the owner
+            
             $error = "Unauthorized action";
         }
     } else {

@@ -39,7 +39,7 @@ mysqli_query($conn, $sql);
 
 $pass = password_hash('admin', PASSWORD_BCRYPT);
 $sql = "INSERT INTO user (user_name, user_email, user_password)
-            SELECT 'admin', 'admin@gmail.com', '". $pass . "'
+            SELECT 'admin', 'admin@gmail.com', '" . $pass . "'
             WHERE NOT EXISTS (
                 SELECT 1 FROM user WHERE user_name = 'admin'
             );

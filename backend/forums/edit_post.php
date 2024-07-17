@@ -2,10 +2,10 @@
 require_once(__DIR__ . '/../db/db.php');
 session_start();
 
-// Get database connection
+
 $conn = DB::openConnection();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Log the incoming request for debugging
+
     error_log(print_r($_POST, true));
 
     if (isset($_POST['post_id'], $_POST['title'], $_POST['content'])) {
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newTitle = $_POST['title'];
         $newContent = $_POST['content'];
 
-        // Update the post in the database
+
         $sql = "UPDATE posts SET title = ?, content = ? WHERE id = ?";
         $stmt = mysqli_prepare($conn, $sql);
 

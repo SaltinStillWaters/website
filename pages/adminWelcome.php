@@ -127,19 +127,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?>
     </form>
     <?php
-            if (isset($error))
-            {                
-                echo "<div class='error'>";
-                echo "<p>$error</p>";
-                echo "</div>";
-            }
-            if (isset($message))
-            {
-                echo "<div class='message'>";
-                echo "<p>$message</p>";
-                echo "</div>";
-            }
-        ?>
+    if (isset($error)) {
+        echo "<div class='error'>";
+        echo "<p>$error</p>";
+        echo "</div>";
+    }
+    if (isset($message)) {
+        echo "<div class='message'>";
+        echo "<p>$message</p>";
+        echo "</div>";
+    }
+    ?>
     <script>
         function fileUploaded() {
             var form = document.getElementById('form');

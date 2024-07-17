@@ -1,7 +1,7 @@
 <?php
 require_once('../backend/db/db.php');
 
-// Function to retrieve comments for a post
+
 function getComments($conn, $post_id) {
     $sql = "SELECT * FROM comments WHERE post_id = ? ORDER BY created_at DESC";
     $stmt = mysqli_prepare($conn, $sql);
@@ -33,7 +33,7 @@ function displayComments($conn, $post_id) {
             echo '</div></div>';
             echo '<p class="card-text mt-2">'.htmlspecialchars($comment['content']).'</p>';
 
-            // Determine if current user is the comment owner
+            
             $currentUser = strtolower(trim($_SESSION['user_name'] ?? ''));
             $commentOwner = strtolower(trim($comment['user_name']));
 
@@ -43,11 +43,11 @@ function displayComments($conn, $post_id) {
             echo '</button>';
             echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">';
             if ($currentUser === $commentOwner) {
-                // User is the owner of the comment
+                
                 echo '<a class="dropdown-item edit-comment" href="../backend/forums/edit_comment.php?comment_id" data-commentid="'.$comment['id'].'" data-content="'.htmlspecialchars($comment['content']).'">Edit</a>';
                 echo '<a class="dropdown-item delete-comment" href="../backend/forums/delete_comment.php?comment_id='.$comment['id'].'">Delete</a>';            
             } else {
-                // User is not the owner of the comment
+                
                 echo '<a class="dropdown-item" href="#">Report</a>';
                 echo '<a class="dropdown-item" href="#">Hide</a>';
             }
@@ -61,7 +61,7 @@ function displayComments($conn, $post_id) {
         echo '</div>';
     }
 
-    // Comment form
+    
     echo '<div class="comment-form">';
     echo '<form method="post" action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'">';
     echo '<div class="form-group">';
@@ -73,7 +73,7 @@ function displayComments($conn, $post_id) {
     echo '</div>';
     
 }
-    // modal for editting comments
+    
     echo '<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">';
     echo '<div class="modal-dialog modal-dialog-centered">';
     echo '<div class="modal-content">';

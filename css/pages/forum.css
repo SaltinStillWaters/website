@@ -1,134 +1,136 @@
-
-
 h1 {
-    padding-top: 40px;
+  padding-top: 40px;
 }
 
-h1, h2, h6, p, .form-label, .btn {
-    color: #ffffff;
+h1,
+h2,
+h6,
+p,
+.form-label,
+.btn {
+  color: #ffffff;
 }
 
-.card-title, h5, .card-text, .form-control {
-    color: #000000;
+.card-title,
+h5,
+.card-text,
+.form-control {
+  color: #000000;
 }
 
-.card-subtitle{
-    font-size: 20px;
-    color: #000000 !important;
-
+.card-subtitle {
+  font-size: 20px;
+  color: #000000 !important;
 }
 
 .card {
-    position: relative;
-    box-shadow: 0 4px 8px rgba(101, 100, 100, 0.681); 
-    transition: all 0.3s ease-in-out;
-    border-radius: 30px;
-    overflow: hidden;
-    margin-bottom: 20px;
-    background-color: rgba(220, 218, 218, 0.865); 
-    border: 1px solid rgba(151, 151, 151, 0.62); 
+  position: relative;
+  box-shadow: 0 4px 8px rgba(101, 100, 100, 0.681);
+  transition: all 0.3s ease-in-out;
+  border-radius: 30px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background-color: rgba(220, 218, 218, 0.865);
+  border: 1px solid rgba(151, 151, 151, 0.62);
 }
 
 .card:hover {
-    box-shadow: 0 8px 16px rgba(170, 169, 169, 0.725); 
-    transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(170, 169, 169, 0.725);
+  transform: translateY(-5px);
 }
 
 .card-body {
-    padding: 25px; 
+  padding: 25px;
 }
 
 .card-glow {
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)); 
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
 }
 
 .avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
-.post, .comment {
-    margin-bottom: 5px;
+.post,
+.comment {
+  margin-bottom: 5px;
 }
 
-.form-group{
-    margin-left: 30px;
-    margin-right: 30px;
-
+.form-group {
+  margin-left: 30px;
+  margin-right: 30px;
 }
 .comment {
-    margin-left: 30px;
+  margin-left: 30px;
 }
 
 .btn-primary {
-    background-color: #ce11d8b5; 
-    border-color: #000000d2; 
-    color: #fff; 
-    padding: 5px 10px; 
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-bottom: 20px;
+  background-color: #ce11d8b5;
+  border-color: #000000d2;
+  color: #fff;
+  padding: 5px 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 20px;
 }
 
 .btn-primary:hover {
-    background-color: #9a0598d0; 
-    border-color: #000000; 
-
+  background-color: #9a0598d0;
+  border-color: #000000;
 }
 
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary:focus:active {
-    background-color: #9a0598d0;
-    border-color: #0000003f;    
-    color: #fff;             
+  background-color: #9a0598d0;
+  border-color: #0000003f;
+  color: #fff;
 }
 
 .ellipsis-dropdown {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 .btn-secondary {
-    background-color:#ce11d8b5;
-    border-color: #00000000;   
-    color: #fff;               
+  background-color: #ce11d8b5;
+  border-color: #00000000;
+  color: #fff;
 }
 
 .btn-secondary:hover {
-    background-color: #9a0598d0;
-    border-color: #00000000;      
+  background-color: #9a0598d0;
+  border-color: #00000000;
 }
 .btn-secondary:focus,
 .btn-secondary:active,
 .btn-secondary:focus:active {
-    background-color: #9a0598d0;
-    border-color: #000000;    
-    color: #fff;             
+  background-color: #9a0598d0;
+  border-color: #000000;
+  color: #fff;
 }
 
 .ellipsis-dropdown {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
-
 .ellipsis-dropdown .btn-link {
-    padding: 0;
-    border: none;
-    background: none;
-    color: #161616d3;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #161616d3;
 }
 
 .ellipsis-dropdown .btn-link:hover {
-    color: #ce11d8b5;
+  color: #ce11d8b5;
 }
 
 .ellipsis-dropdown .dropdown-menu {
-    right: 0;
-    left: auto;
+  right: 0;
+  left: auto;
 }
-

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This class contains static members that specify ALL the available input types of the user
  * It also contains methods that validate and sanitize each input type
@@ -13,10 +14,9 @@ class Type
     public static $Email = 'Email';
     public static $Date = 'Date';
     public static $Text = 'Text';
-    public static function errMsg($type) : string
+    public static function errMsg($type): string
     {
-        return match($type)
-        {
+        return match ($type) {
             //error messages MUST be filled and unique, else there would be problems in error handling
             self::$Email => 'Not a valid email',
             self::$Name => 'Must only contain letters',
@@ -29,8 +29,7 @@ class Type
     }
     public static function checkValid($val, string $type)
     {
-        switch ($type) 
-        {
+        switch ($type) {
             case self::$Name:
                 return preg_match("/^[a-zA-Z-' ]*$/", $val);
 
@@ -39,14 +38,14 @@ class Type
 
             case self::$PhoneNumber:
                 return preg_match("/^[0][9][0-9]{9}$/", $val);
-            
+
             case self::$NumberStr:
                 return preg_match("/^[0-9]*$/", $val);
-                
+
             case self::$Password:
                 //not yet implemented
                 return true;
-            
+
             case self::$Date:
                 //not yet implemented
                 return true;

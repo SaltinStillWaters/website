@@ -8,7 +8,6 @@ PageController::init(false);
 $_SESSION['admin'] = array_diff(scandir('../../resources/welcome/news'), array('..', '.'));
 
 
-// Example usage:
 $sourceFolder = '../../resources/welcome/news';
 $destinationFolder = '../../resources/welcome/newsTemp';
 

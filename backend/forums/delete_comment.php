@@ -2,19 +2,19 @@
 require_once(__DIR__ . '/../db/db.php');
 session_start();
 
-// Get the database connection
+
 $conn = DB::openConnection();
 
-// Initialize message variables
+
 $message = '';
 $error = '';
 
-// Check if the user is logged in and has the necessary permission
+
 if (isset($_SESSION['user_name']) && isset($_GET['comment_id'])) {
     $commentId = intval($_GET['comment_id']);
     $userName = $_SESSION['user_name'];
 
-    // Check if the current user is the owner of the comment
+    
     $sql = "SELECT user_name FROM comments WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     if ($stmt) {
@@ -25,7 +25,7 @@ if (isset($_SESSION['user_name']) && isset($_GET['comment_id'])) {
         mysqli_stmt_close($stmt);
 
         if ($userName === $commentOwner) {
-            // User is the owner, delete the comment
+            
             $sql = "DELETE FROM comments WHERE id = ?";
             $stmt = mysqli_prepare($conn, $sql);
             if ($stmt) {
@@ -41,7 +41,7 @@ if (isset($_SESSION['user_name']) && isset($_GET['comment_id'])) {
                 $error = "Failed to prepare delete statement";
             }
         } else {
-            // User is not the owner
+            
             $error = "Unauthorized action";
         }
     } else {
@@ -51,10 +51,10 @@ if (isset($_SESSION['user_name']) && isset($_GET['comment_id'])) {
     $error = "Invalid request";
 }
 
-// Set the session variables for message or error
+
 $_SESSION['message'] = $message;
 $_SESSION['error'] = $error;
 
-// Redirect back to the forum page
+
 header("Location: ../../pages/forum.php");
 exit();

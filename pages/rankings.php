@@ -10,10 +10,9 @@ function generateTable($table)
 {
     $ctr = 1;
 
-    foreach ($table as $row)
-    {
+    foreach ($table as $row) {
         echo "<tr>";
-        echo "<td> $ctr </td>"; 
+        echo "<td> $ctr </td>";
         echo "<td> <img src='../resources/ranking/" . $row[0] . ".png' alt=''>" . $row[0] . "</td>";
         echo "<td> $row[1] </td> <td> $row[2] </td> <td> $row[3] </td>";
         echo "</tr>";
@@ -37,17 +36,17 @@ function generateTable($table)
 </head>
 
 <body>
-<header>
-            <a href="#" class="logo">ml companion</a>
-            <ul>
-                <li><a href="welcome.php">Strategy Guides</a></li>
-                <li><a href="rankings.php">Hero Rankings</a></li>
-                <li><a href='forum.php'>Forums</a></li>
-                <div class="logout">                
-                    <li><a href="logout.php">Log out</a></li>
-                </div>
-            </ul>
-        </header>
+    <header>
+        <a href="#" class="logo">ml companion</a>
+        <ul>
+            <li><a href="welcome.php">Strategy Guides</a></li>
+            <li><a href="rankings.php">Hero Rankings</a></li>
+            <li><a href='forum.php'>Forums</a></li>
+            <div class="logout">
+                <li><a href="logout.php">Log out</a></li>
+            </div>
+        </ul>
+    </header>
 
     <main class="table" id="customers_table">
 
@@ -84,11 +83,11 @@ function generateTable($table)
                 </thead>
 
                 <tbody>
-<?php
+                    <?php
 
-    generateTable(DB_ranking::getTable());
+                    generateTable(DB_ranking::getTable());
 
-?>
+                    ?>
                 </tbody>
             </table>
         </section>

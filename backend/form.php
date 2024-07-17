@@ -21,12 +21,11 @@ class Form
     public static $SESSION_NAME;
     public static function init()
     {
-        if (!isset($_SESSION[self::$SESSION_NAME]))
-        {
+        if (!isset($_SESSION[self::$SESSION_NAME])) {
             $_SESSION[self::$SESSION_NAME] = [];
         }
     }
-    public static function inputText(string $id, string $type, string $placeholder='', string $icon='', bool $required = false, bool $unique = false, bool $caseSensitive = true)
+    public static function inputText(string $id, string $type, string $placeholder = '', string $icon = '', bool $required = false, bool $unique = false, bool $caseSensitive = true)
     {
         self::addSession($id, $type, $required, $unique, $caseSensitive);
 
@@ -36,7 +35,7 @@ class Form
                     <div class='err-msg'> <p>{$_SESSION[self::$SESSION_NAME][$id]['error']}</p> </div>
                 </div>";
     }
-    public static function inputPassword(string $id, string $placeholder='', string $icon='', bool $required = false)
+    public static function inputPassword(string $id, string $placeholder = '', string $icon = '', bool $required = false)
     {
         self::addSession($id, Type::$Password, $required, false, true);
 
@@ -49,65 +48,53 @@ class Form
                 </div>";
     }
 
-    private static function addSession(string $id, string $type, bool $required=false, bool $unique, bool $caseSensitive)
+    private static function addSession(string $id, string $type, bool $required = false, bool $unique, bool $caseSensitive)
     {
-        if (isset($_SESSION[self::$SESSION_NAME][$id]))
-        {
+        if (isset($_SESSION[self::$SESSION_NAME][$id])) {
             return;
         }
-        
+
         $_SESSION[self::$SESSION_NAME][$id] = ['content' => '', 'error' => '', 'type' => $type, 'required' => $required, 'unique' => $unique, 'caseSensitive' => $caseSensitive];
     }
     public static function updateContents()
     {
-        foreach ($_POST as $id => $content)
-        {
-            if ($id === 'submit' || $id == 'refresh')
-            {
+        foreach ($_POST as $id => $content) {
+            if ($id === 'submit' || $id == 'refresh') {
                 continue;
             }
-            
-            if (isset($_SESSION[self::$SESSION_NAME][$id]))
-            {
+
+            if (isset($_SESSION[self::$SESSION_NAME][$id])) {
                 $_SESSION[self::$SESSION_NAME][$id]['content'] = $content;
             }
         }
     }
     public static function updateErrors()
     {
-        foreach ($_SESSION[self::$SESSION_NAME] as $id => $key)
-        {
-            if ($id == 'submit' || $id == 'refresh')
-            {
+        foreach ($_SESSION[self::$SESSION_NAME] as $id => $key) {
+            if ($id == 'submit' || $id == 'refresh') {
                 continue;
             }
-            
+
             $errMsg = '';
             //check for blank input
-            if ($key['required'] && $key['content'] === '')
-            {
+            if ($key['required'] && $key['content'] === '') {
                 $errMsg = 'Required <br>';
-            }
-            elseif (!Type::checkValid($key['content'], $key['type']))
-            {
+            } elseif (!Type::checkValid($key['content'], $key['type'])) {
                 $errMsg = Type::errMsg($key['type']) . '<br>';
             }
-            
+
             //update session error
             $_SESSION[self::$SESSION_NAME][$id]['error'] = $errMsg;
         }
     }
     public static function hasErrors()
     {
-        foreach ($_SESSION[self::$SESSION_NAME] as $id => $key)
-        {
-            if ($id == 'submit' || $id == 'refresh')
-            {
+        foreach ($_SESSION[self::$SESSION_NAME] as $id => $key) {
+            if ($id == 'submit' || $id == 'refresh') {
                 continue;
             }
 
-            if ($key['error'] !== '')
-            {
+            if ($key['error'] !== '') {
                 return true;
             }
         }
