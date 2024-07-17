@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($_POST['name'] === 'admin') {
                 PageController::setCanAccess(true, 'toAdminRankings.php');
                 PageController::setCanAccess(true, 'toAdminWelcome.php');
-                PageController::setCanAccess(true, 'adminWelcome.php');
+                PageController::setCanAccess(true, 'adminForum.php');                
                 header('Location: transition/toAdminWelcome.php');
                 exit();
             }
