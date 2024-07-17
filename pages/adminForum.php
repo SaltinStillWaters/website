@@ -39,10 +39,10 @@ function getComments($conn, $post_id) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['delete_post'])) {
         $postId = $_POST['delete_post'];
-        deletePostById($postId); 
+        deletePostById($conn, $postId); 
     } elseif (isset($_POST['delete_comment'])) {
         $commentId = $_POST['delete_comment'];
-        deleteCommentById($commentId); 
+        deleteCommentById($conn, $commentId); 
     }
 }
 
@@ -67,17 +67,16 @@ $conn->close();
 </head>
 <body>
 <header>
-    <a href="#" class="logo">ml companion</a>
-    <ul>
-        <li><a href="welcome.php">Strategy Guides</a></li>
-        <li><a href="rankings.php">Hero Rankings</a></li>
-        <li><a href="#">Counter Picking</a></li>
-        <li><a href='forum.php'>Forums</a></li>
-        <div class="logout">                
-            <li><a href="logout.php">Log out</a></li>
-        </div>
-    </ul>
-</header>
+            <a href="#" class="logo">ml companion</a>
+            <ul>
+                <li><a href="transition/toAdminWelcome.php">Strategy Guides</a></li>
+                <li><a href="transition/toAdminRankings.php">Hero Rankings</a></li>
+                <li><a href='adminForum.php'>Forums</a></li>
+                <div class="logout">                
+                    <li><a href="logout.php">Log out</a></li>
+                </div>
+            </ul>
+        </header>
 
 <div class="container mt-5">
     <h1 class="container mt-5 text-center heading">Manage Forum</h1>

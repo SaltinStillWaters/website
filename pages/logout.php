@@ -8,6 +8,7 @@ PageController::setCanAccess(true, 'signup.php');
 PageController::setCanAccess(false, 'welcome.php');
 PageController::setCanAccess(false, 'rankings.php');
 PageController::setCanAccess(false, 'forum.php');
+PageController::setCanAccess(false, 'adminForum.php');
 PageController::setCanAccess(false, 'adminWelcome.php');
 PageController::setCanAccess(false, 'adminRankings.php');
 PageController::setCanAccess(false, 'toAdminWelcome.php');

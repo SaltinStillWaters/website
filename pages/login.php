@@ -10,24 +10,20 @@ PageController::init();
 Form::$SESSION_NAME = 'login';
 Form::init();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Form::updateContents();
     Form::updateErrors();
 
-    if (!Form::hasErrors())
-    {
-        if (Auth::login())
-        {
-            if (!isset($_POST['remember']))
-            {
+    if (!Form::hasErrors()) {
+        if (Auth::login()) {
+            if (!isset($_POST['remember'])) {
                 unset($_SESSION[Form::$SESSION_NAME]);
             }
 
-            if ($_POST['name'] === 'admin')
-            {
+            if ($_POST['name'] === 'admin') {
                 PageController::setCanAccess(true, 'toAdminRankings.php');
                 PageController::setCanAccess(true, 'toAdminWelcome.php');
+                PageController::setCanAccess(true, 'adminForum.php');
                 header('Location: transition/toAdminWelcome.php');
                 exit();
             }
@@ -39,9 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             PageController::setCanAccess(false, 'signup.php');
             header('Location: welcome.php');
             exit();
-        }
-        else
-        {
+        } else {
             $_SESSION[Form::$SESSION_NAME]['name']['error'] = 'Username and Password does not match';
             $_SESSION[Form::$SESSION_NAME]['password']['error'] = 'Username and Password does not match';
         }
@@ -51,10 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Felper</title>   
+    <title>Felper</title>
     <link href="../css/pages/login_signup.css" rel="stylesheet">
     <link href="../css/dependencies/boxicons-2.1.4/css/boxicons.min.css" rel='stylesheet'>
     <script src="../backend/js/utils.js"></script>

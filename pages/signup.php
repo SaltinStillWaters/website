@@ -8,15 +8,12 @@ PageController::init();
 Form::$SESSION_NAME = 'user';
 Form::init();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-{
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     Form::updateContents();
     Form::updateErrors();
 
-    if (!Form::hasErrors())
-    {
-        if (DB::addNewUser($_SESSION[Form::$SESSION_NAME], 'user'))
-        {
+    if (!Form::hasErrors()) {
+        if (DB::addNewUser($_SESSION[Form::$SESSION_NAME], 'user')) {
             unset($_SESSION[Form::$SESSION_NAME]);
             header('Location: login.php');
         }
@@ -26,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <link href="../css/dependencies/boxicons-2.1.4/css/boxicons.min.css" rel='stylesheet'>
     <script src="../backend/js/utils.js"></script>
 </head>
+
 <body>
     <div class="wrapper">
         <form method="post">
@@ -54,4 +53,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </form>
     </div>
 </body>
+
 </html>
