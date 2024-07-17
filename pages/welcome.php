@@ -1,3 +1,8 @@
+<?php
+session_start();
+require_once('../backend/page_controller.php');
+PageController::init(false);
+?>
 <head>
     <link rel="stylesheet" href="../css/base/base.css">
     <link rel="stylesheet" href="../css/layout/header.css">

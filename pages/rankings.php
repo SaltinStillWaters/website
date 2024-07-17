@@ -1,5 +1,11 @@
 <?php
+session_start();
+require_once('../backend/page_controller.php');
+PageController::init(false);
+
+
 require_once('../backend/db/DB_ranking.php');
+
 function generateTable($table)
 {
     $ctr = 1;

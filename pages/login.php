@@ -3,6 +3,9 @@ session_start();
 require_once('../backend/form.php');
 require_once('../backend/db/db.php');
 require_once('../backend/auth.php');
+require_once('../backend/page_controller.php');
+
+PageController::init();
 
 Form::$SESSION_NAME = 'login';
 Form::init();
@@ -20,7 +23,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             {
                 unset($_SESSION[Form::$SESSION_NAME]);
             }
+
+            if ($_POST['name'] === 'admin')
+            {
+                PageController::setCanAccess(true, 'toAdminRankings.php');
+                PageController::setCanAccess(true, 'toAdminWelcome.php');
+                header('Location: transition/toAdminWelcome.php');
+                exit();
+            }
+
+            PageController::setCanAccess(true, 'welcome.php');
+            PageController::setCanAccess(true, 'rankings.php');
+            PageController::setCanAccess(true, 'forum.php');
+            PageController::setCanAccess(false, 'login.php');
+            PageController::setCanAccess(false, 'signup.php');
             header('Location: welcome.php');
+            exit();
         }
         else
         {
