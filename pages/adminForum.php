@@ -39,10 +39,10 @@ function getComments($conn, $post_id) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['delete_post'])) {
         $postId = $_POST['delete_post'];
-        deletePostById($postId); 
+        deletePostById($conn, $postId); 
     } elseif (isset($_POST['delete_comment'])) {
         $commentId = $_POST['delete_comment'];
-        deleteCommentById($commentId); 
+        deleteCommentById($conn, $commentId); 
     }
 }
 
