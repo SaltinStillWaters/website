@@ -137,9 +137,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 <header>
             <a href="#" class="logo">ml companion</a>
             <ul>
+<<<<<<< Updated upstream
                 <li><a href="transition/toAdminWelcome.php">Strategy Guides</a></li>
                 <li><a href="transition/adminRankings.php">Hero Rankings</a></li>
                 <li><a href='adminForum.php'>Forums</a></li>
+=======
+                <li><a href="transition/toAdminWelcome">Strategy Guides</a></li>
+                <li><a href="transition/toAdminRankings.php">Hero Rankings</a></li>
+                <li><a href='transition/toAdminForum.php'>Forums</a></li>
+>>>>>>> Stashed changes
                 <div class="logout">                
                     <li><a href="logout.php">Log out</a></li>
                 </div>
