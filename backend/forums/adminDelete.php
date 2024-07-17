@@ -5,10 +5,6 @@ require_once(__DIR__ . '/../page_controller.php');
 PageController::init(false);
 
 $conn = DB::openConnection();
-// Check if the user is an admin
-if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
-    die('Unauthorized access');
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['delete_post'])) {

@@ -1,12 +1,10 @@
 <?php
 session_start();
-require_once('../backend/page_controller.php');
-PageController::init(false);
-
-
 require_once('../backend/db/db.php');
 require_once('../backend/forums/posts.php');
 require_once('../backend/forums/comments.php');
+require_once('../backend/page_controller.php');
+PageController::init(false);
 
 // Handling post submission and comment submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -32,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         mysqli_stmt_close($stmt);
-    } elseif (isset($_POST['title']) && isset($_POST['content'])) { // Check if new post submission
+    } elseif (isset($_POST['title']) && isset($_POST['content'])) { 
         $user_name = $_SESSION['user_name'];
         $title = $_POST['title'];
         $content = $_POST['content'];

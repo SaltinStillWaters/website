@@ -6,17 +6,6 @@ PageController::init(false);
 
 $conn = DB::openConnection();
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Check if the user is an admin
-if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
-    header('Location: ../login.php');
-    exit();
-}
-
 function getPosts($conn) {
     $sql = "SELECT posts.*, USER.user_name FROM posts 
             INNER JOIN USER ON posts.user_name = USER.user_name 
@@ -25,7 +14,6 @@ function getPosts($conn) {
     $posts = [];
     if ($result && mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
-            // Fetch comments for each post
             $row['comments'] = getComments($conn, $row['id']);
             $posts[] = $row;
         }
@@ -50,19 +38,16 @@ function getComments($conn, $post_id) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['delete_post'])) {
-        // Handle post deletion
         $postId = $_POST['delete_post'];
-        deletePostById($postId); // You need to implement this function
+        deletePostById($postId); 
     } elseif (isset($_POST['delete_comment'])) {
-        // Handle comment deletion
         $commentId = $_POST['delete_comment'];
-        deleteCommentById($commentId); // You need to implement this function
+        deleteCommentById($commentId); 
     }
 }
 
 $posts = getPosts($conn);
 
-// Close connection
 $conn->close();
 ?>
 
@@ -102,17 +87,15 @@ $conn->close();
     </div>
 
     <?php
-    // Sort $posts array by 'id' in ascending order
-    usort($posts, function($a, $b) {
-        return $a['id'] <=> $b['id'];
-    });
+        // Sort $posts array by 'id' in ascending order
+        usort($posts, function($a, $b) {
+            return $a['id'] <=> $b['id'];
+        });
     ?>
     <!-- Posts section -->
     <div id="postsSection" style="display:none;">
         <h3>Post Report</h3>
         <?php if (isset($_SESSION['message'])): ?>
-            <div id="successMessage" class="alert alert-success"><?= htmlspecialchars($_SESSION['message']) ?></div>
-            <?php unset($_SESSION['message']); // Clear the message after displaying ?>
         <?php endif; ?>
         <table class="table table-striped">
             <thead class="thead-dark">
@@ -149,8 +132,6 @@ $conn->close();
     <div id="commentsSection" style="display:none;">
         <h3>Comment Report</h3>
         <?php if (isset($_SESSION['message'])): ?>
-            <div id="successMessage" class="alert alert-success"><?= htmlspecialchars($_SESSION['message']) ?></div>
-            <?php unset($_SESSION['message']); // Clear the message after displaying ?>
         <?php endif; ?>
         <table class="table table-striped">
             <thead class="thead-dark">
@@ -174,7 +155,7 @@ $conn->close();
                     <?php foreach ($post['comments'] as $comment): ?>
                         <tr>
                             <td><?= htmlspecialchars($comment['id']) ?></td>
-                            <td><?= htmlspecialchars($post['id']) ?></td> <!-- Displaying post_id for reference -->
+                            <td><?= htmlspecialchars($post['id']) ?></td>
                             <td><?= htmlspecialchars($comment['user_name']) ?></td>
                             <td><?= htmlspecialchars($comment['content']) ?></td>
                             <td><?= htmlspecialchars($comment['created_at']) ?></td>
@@ -192,8 +173,7 @@ $conn->close();
     </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initially hide posts section
+    document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('postsSection').style.display = 'none';
 
     // Show comments section when "Show Comments" button is clicked

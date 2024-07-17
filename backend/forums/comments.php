@@ -94,3 +94,4 @@ function displayComments($conn, $post_id) {
     echo '</div>';
     echo '</div>';
     echo '</div>';
+?>
