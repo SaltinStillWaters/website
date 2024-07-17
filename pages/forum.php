@@ -276,11 +276,5 @@ $posts = getPosts($conn);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="../backend/js/forum.js"></script>
 
-    <footer>
-        <img src="../resources/footer/app_store.png" alt="">
-        <img src="../resources/footer/google_play.png" alt="">
-        <img src="../resources/footer/ml_logo.png" alt="" class="logo">
-    </footer>
-
 </body>
 </html>
