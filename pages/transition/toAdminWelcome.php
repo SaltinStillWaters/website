@@ -3,7 +3,7 @@ session_start();
 require_once('../../backend/file.php');
 require_once('../../backend/page_controller.php');
 
-PageController::init(false);
+PageController::init(true);
 
 $_SESSION['admin'] = array_diff(scandir('../../resources/welcome/news'), array('..', '.'));
 

@@ -37,7 +37,6 @@ function displayPosts($posts, $conn) {
             $currentUser = strtolower(trim($_SESSION['user_name'])) ?? '';
             $postOwner = strtolower(trim($post['user_name']));
             
-                       
             if ($currentUser === $postOwner) {
                 // User is the owner of the post
                 echo '<div class="dropdown ellipsis-dropdown">';
@@ -75,6 +74,7 @@ function displayPosts($posts, $conn) {
         echo '<p>No posts available.</p>';
     }
 }
+
     //modal for editting posts
     echo '<div class="modal fade" id="editPostModal" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel" aria-hidden="true">';
     echo '<div class="modal-dialog modal-dialog-centered" role="document">';
@@ -101,3 +101,5 @@ function displayPosts($posts, $conn) {
     echo '</div>';
     echo '</div>';
     echo '</div>';
+
+    
