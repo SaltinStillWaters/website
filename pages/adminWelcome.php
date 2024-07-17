@@ -56,13 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($canSave) {
             $toRemove = array_diff(scandir('../resources/welcome/newsTemp'), $_SESSION['admin'], array('..', '.'));
-<<<<<<< Updated upstream
             foreach ($toRemove as $file) {
-=======
-            foreach ($toRemove as $file)
-            {
-                echo $file;
->>>>>>> Stashed changes
                 unlink('../resources/welcome/newsTemp/' . $file);
             }
             Files::copyFolder('../resources/welcome/newsTemp', '../resources/welcome/news');
@@ -96,19 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-<<<<<<< Updated upstream
-    <header>
-        <a href="#" class="logo">ml companion</a>
-        <ul>
-            <li><a href="transition/toAdminWelcome.php">Strategy Guides</a></li>
-            <li><a href="transition/toAdminRankings.php">Hero Rankings</a></li>
-            <li><a href='adminForum.php'>Forums</a></li>
-            <div class="logout">
-                <li><a href="logout.php">Log out</a></li>
-            </div>
-        </ul>
-    </header>
-=======
 <header>
             <a href="#" class="logo">ml companion</a>
             <ul>
@@ -120,7 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </ul>
         </header>
->>>>>>> Stashed changes
 
     <form id='form' method="post" enctype="multipart/form-data">
         <?php
